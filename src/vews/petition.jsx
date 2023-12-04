@@ -1,8 +1,44 @@
-import React from "react";
+import React, { useEffect }from "react";
 import "../styles/petition.css"
 
 
+
+
 export const Petition = () => {
+    let initState = {
+		code:'',
+		document_title: '',
+		change_description: '',
+		change_justify: '',
+		type_document: '',
+		cchange_type: '',
+
+	};
+	const {actions} = useContext(Context);
+	const [userPetition,setUserPetition]= useState(initState);
+
+	let navigate = useNavigate();
+
+	const handleChange = ({target}) => {
+		setUserPetition ({
+		 ...userPetition,
+		 [target.name]:target.value,
+		});
+
+	};
+
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+		if (userPetition.code.trim() != "" && userPetition.document_title.trim() != "" && userPetition.change_description.trim() != "" && userPetition.change_justify.trim() != "" && userPetition.cchange_type.trim() != "" && userPetition.type_document.trim() != "") {
+			
+		   let response = await actions.Login(userPuserPetition);
+		   if (response){
+			navigate("/")}
+			window.location.reload();
+		} else {
+		 console.log("campos obligatorios");
+		} 
+	};
 
     return (
         <>
@@ -45,7 +81,7 @@ export const Petition = () => {
                 </div>
                 <div class="d-grid gap-2 col-6 mx-auto">
                     <button class="btn btn-primary" type="button">Generar Solicitud</button>
-                    
+
                 </div>
             </div>
         </>

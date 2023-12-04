@@ -24,6 +24,7 @@ export const Home = () =>{
                                     <th scope="col">Justificación del cambio</th>
                                     <th scope="col">Tipo de documento</th>
                                     <th scope="col">Tipo de cambio</th>
+                                    <th scope="col">status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -36,6 +37,7 @@ export const Home = () =>{
                                     <td>{petitions.change_justify}</td>
                                     <td>{petitions.type_document}</td>
                                     <td>{petitions.change_type}</td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">2</th>

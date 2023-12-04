@@ -97,18 +97,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 
-			addProduct: async (product) => {
+			addPetition: async (petition) => {
 				let store = getStore()
 
 				try {
-					let response = await fetch(`${store.urlBase}/products`, {
+					let response = await fetch(`${store.urlBase}/petition`, {
 						method: "POST",
 						headers: { "Content-Type": "application/json" },
-						body: JSON.stringify(product)
+						body: JSON.stringify(petition)
 					})
 					console.log(response)
 					if (response.ok) {
-						getActions().getProducts()
+						getActions().getPetitions()
 						console.log("me guardé")
 					}
 
