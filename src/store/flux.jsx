@@ -4,6 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			message: null,
 
 			token: localStorage.getItem("token") || "",
+			user_id: localStorage.getItem("user_id") || "",
 			urlBase: "http://127.0.0.1:3005",
 			endPoint: "petitions",
 			petitions: [],
@@ -69,14 +70,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 						headers: {
 							'Content-Type': 'application/json',
 						},
-						body: JSON.stringify(user),
+						body: JSON.stringify(user)
 					});
 					if (response.ok) {
 						
 						let data = await response.json();
-						setStore({ token: data.token });
-						localStorage.setItem("token", data.token);
-						return true ;
+						setStore({ token: data.token, user_id: data.user_id });
+						localStorage.setItem("token", data.token, "user_id", data.user_id);
+						return true;
 						
 					}
 					return false;
@@ -103,17 +104,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					let response = await fetch(`${store.urlBase}/petition`, {
 						method: "POST",
-						headers: { "Content-Type": "application/json" },
+						headers: {
+							'Content-Type': 'application/json',
+							"Authorization": `Bearer ${store.token}`
+						},
+
 						body: JSON.stringify(petition)
 					})
 					console.log(response)
 					if (response.ok) {
-						getActions().getPetitions()
+						getActions().getPetitions(),
+						
 						console.log("me guardé")
 					}
 
 				} catch (error) {
-
 					console.log("explote"(error))
 				}
 

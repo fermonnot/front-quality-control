@@ -1,6 +1,7 @@
 import React,   { useState,useContext } from 'react';
 import { Context } from '../store/appContext';
 import {Navigate, useNavigate} from "react-router-dom";
+	
 
 
 const Login = () => {
@@ -48,7 +49,7 @@ const Login = () => {
 							 className="form-control"
 							 onChange={handleChange}
 							 value={userLogin.usuario}
-							 />
+							/>
 						</div>
 
 						<div className="form- group">
@@ -61,7 +62,7 @@ const Login = () => {
 							/>
 						</div>
 
-						<button className="btn btn-secundary w-100 my-3">
+						<button className="btn btn-primary w-100 my-3">
 							Iniciar sesion
 						</button>
 
