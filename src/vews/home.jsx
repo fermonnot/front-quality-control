@@ -26,10 +26,10 @@ export const Home = () => {
                 </thead>
                 <tbody>
                     {store.petitions.map((petitions, index) => {
-                        return (
 
+                        return (
                             <tr key={index}>
-                                <th scope="row"></th>
+                                <th scope="row">{index + 1}</th>
                                 <td>{petitions.created}</td>
                                 <td>{petitions.code}</td>
                                 <td>{petitions.document_title}</td>
@@ -37,14 +37,15 @@ export const Home = () => {
                                 <td>{petitions.change_justify}</td>
                                 <td>{petitions.type_document}</td>
                                 <td>{petitions.change_type}</td>
-                                <td></td>
+                                <td>
+                                    <button>EDITAR</button>
+                                    <button>ELIMINAR</button>
+                                </td>
                             </tr>
-
-
                         )
-                    })},
-                </tbody>,
-            </table>,
-       </>
-    )              
+                    })}
+                </tbody>
+            </table>
+        </>
+    )
 }

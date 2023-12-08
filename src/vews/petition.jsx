@@ -10,6 +10,7 @@ import "../styles/petition.css"
 
 
 export const Petition = () => {
+    
     let initState = {
         code: '',
         document_title: '',
@@ -17,18 +18,20 @@ export const Petition = () => {
         change_justify: '',
         type_document: '',
         change_type: '',
+        user_id: localStorage.getItem('user_id')
+        
 
     };
-   
-    
+
+
 
     // let decodedToken = jwtDecode(token)
     // console.log("token",decodedToken)
     // const user_id = decodedToken.user_id
-    
-    const { actions } = useContext(Context);
+
+    const { store, actions } = useContext(Context);
     const [userPetition, setUserPetition] = useState(initState);
-    
+
 
     let navigate = useNavigate();
 
@@ -39,27 +42,28 @@ export const Petition = () => {
         });
 
     };
-    const user_id = localStorage.getItem('user_id');    
-        console.log( ("este es el user:", JSON.stringify(user_id)))
+    
     const handleSubmit = async (event) => {
-        event.preventDefault(); 
-        if (userPetition.code.trim() != "" && userPetition.document_title.trim() != "" && userPetition.change_description.trim() != "" && userPetition.change_justify.trim() != "" && userPetition.change_type.trim() != "" && userPetition.type_document.trim() != "" && userPetition.user_id != "") {
+        event.preventDefault();
+        // const user_id = localStorage.getItem('user_id');
+        const user_id = store.user_id
+        if (userPetition.code.trim() != "" && userPetition.document_title.trim() != "" && userPetition.change_description.trim() != "" && userPetition.change_justify.trim() != "" && userPetition.change_type.trim() != "" && userPetition.type_document.trim() != "" && user_id != "") {
 
             let response = await actions.addPetition(userPetition);
             console.log(response)
             if (response) {
                 console.log("me guardé")
             };
-            // window.location.reload();
+            window.location.reload();
         } else {
             console.log("campos obligatorios");
         }
     };
-    
+
     return (
         <>
-           <h1>Nueva Peticion</h1>
-           <h4>En este formulario ingresa todos los datos requeridos de la solicitud que deseas ingresar a el proceso de Gestión de la calidad</h4>
+            <h1>Nueva Peticion</h1>
+            <h4>En este formulario ingresa todos los datos requeridos de la solicitud que deseas ingresar a el proceso de Gestión de la calidad</h4>
             <div id="div-margen">
                 <form onSubmit={handleSubmit}>
                     <div className="form-floating mb-3">
@@ -128,11 +132,36 @@ export const Petition = () => {
                         <label for="floatingSelect">Tipo de camnbio</label>
                     </div>
                     <div className="d-grid gap-2 col-6 mx-auto">
-                        <button className="btn btn-primary">
+                        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             Generar Solicitud
                         </button>
                     </div>
                 </form>
+           
+                <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-scrollable">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h1 className="modal-title fs-5" id="exampleModalLabel">Verifica todos los campos, por favor!</h1>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div className="modal-body">
+                                <ul>
+                                    <li>Codigo del documento: {userPetition.code}</li>
+                                    <li>Titulo del documento: {userPetition.document_title}</li>
+                                    <li>Descripción del cambio: {userPetition.change_description}</li>
+                                    <li>Justificación del cambio: {userPetition.change_justify}</li>
+                                    <li>Tipo de documento: {userPetition.type_document}</li>
+                                    <li>Tipo de cambio o creación del documento: {userPetition.change_type}</li>
+                                </ul>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-primary" onClick={handleSubmit}>Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
             </div>
         </>
     );

@@ -12,6 +12,18 @@ import { Petition } from './vews/petition'
 
 function Layout() {
   // const [count, setCount] = useState(0)
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);  
+  // const handleLogin = () => {
+  //   const { actions } = useContext(Context);
+  //   let is_login= actions.Login(true)
+  //   if (is_login) {
+  //     return setIsLoggedIn(true)
+  //   }else{
+  //     return console.log("no va bien")
+  //   }
+  // }
+   
+
 
   return (
     <>
@@ -19,12 +31,12 @@ function Layout() {
         <Navbar/>
         <div className='margin-app'>
           <Routes>
-    
+
+           
             <Route path="/" element={<Home />} />;
             <Route path='login' element={<Login/>} />
-            <Route path= "/petitions" element={<Petition/>}/>
-            
-          
+            <Route path="/petitions" element={<Petition />} />
+
           </Routes>
         </div>
       </BrowserRouter>

@@ -38,7 +38,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				} catch (error) {
 
-					console.log(error)
+					return console.log(error), 401
+					
 				}
 			},
 			userRegister: async (user) => {
@@ -77,7 +78,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						let data = await response.json();
 						setStore({ token: data.token, user_id: data.user_id });
 						localStorage.setItem("token", data.token, "user_id", data.user_id);
-						return true;
+						return true;	
 						
 					}
 					return false;
