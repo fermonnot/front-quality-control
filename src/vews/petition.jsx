@@ -10,6 +10,10 @@ import "../styles/petition.css"
 
 
 export const Petition = () => {
+    const { store, actions } = useContext(Context);
+    
+    const getUser = JSON.stringify(store.userData.user_id)
+    console.log("ESTE ES GETUSER",typeof getUser)
     
     let initState = {
         code: '',
@@ -18,23 +22,15 @@ export const Petition = () => {
         change_justify: '',
         type_document: '',
         change_type: '',
-        user_id: localStorage.getItem('user_id')
+        user_id: getUser
         
-
     };
 
+    
 
-
-    // let decodedToken = jwtDecode(token)
-    // console.log("token",decodedToken)
-    // const user_id = decodedToken.user_id
-
-    const { store, actions } = useContext(Context);
     const [userPetition, setUserPetition] = useState(initState);
-
-
     let navigate = useNavigate();
-
+    console.log("hola desde peticiones", store.userData.user_id)
     const handleChange = ({ target }) => {
         setUserPetition({
             ...userPetition,
@@ -45,9 +41,8 @@ export const Petition = () => {
     
     const handleSubmit = async (event) => {
         event.preventDefault();
-        // const user_id = localStorage.getItem('user_id');
-        const user_id = store.user_id
-        if (userPetition.code.trim() != "" && userPetition.document_title.trim() != "" && userPetition.change_description.trim() != "" && userPetition.change_justify.trim() != "" && userPetition.change_type.trim() != "" && userPetition.type_document.trim() != "" && user_id != "") {
+        
+        if (userPetition.code.trim() != "" && userPetition.document_title.trim() != "" && userPetition.change_description.trim() != "" && userPetition.change_justify.trim() != "" && userPetition.change_type.trim() != "" && userPetition.type_document.trim() != "" && userPetition.user_id.trim() != "") {
 
             let response = await actions.addPetition(userPetition);
             console.log(response)
@@ -109,7 +104,7 @@ export const Petition = () => {
                             value={userPetition.type_document}
                             id="floatingSelect"
                             aria-label="Floating label select example">
-                            <option selected>Selecciona un tipo de documento</option>
+                            <option defaultValue={"Selecciona un tipo de documento"}></option>
                             <option value="formulario">Formulario</option>
                             <option value="procedimiento">Procedimiento</option>
                             <option value="instrucciont">Instrucción de trabajo</option>

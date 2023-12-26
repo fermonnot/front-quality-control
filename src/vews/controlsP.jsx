@@ -3,7 +3,7 @@ import { Context } from "../store/appContext";
 import useAuthContext from "../context/authContext";
 
 
-export const Home = () => {
+export const ControlP = () => {
     const { store, actions } = useContext(Context);
  
   

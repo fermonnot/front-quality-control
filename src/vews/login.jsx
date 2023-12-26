@@ -1,7 +1,7 @@
-import React,   { useState,useContext } from 'react';
+import React,{ useState, useContext } from 'react';
 import { Context } from '../store/appContext';
-import {Navigate, useNavigate} from "react-router-dom";
-	
+import {Navigate, useLocation, useNavigate} from "react-router-dom";
+import useAuthContext from '../context/authContext';
 
 
 const Login = () => {
@@ -9,30 +9,41 @@ const Login = () => {
 		user_name:'',
 		password: '',
 	};
-	const {actions} = useContext(Context);
+	const {actions, store} = useContext(Context);
 	const [userLogin,setUserLogin]= useState(initState);
+	
+	
+	
+	const navigate = useNavigate();
 
-	let navigate = useNavigate();
-
-	const handleChange = ({target}) => {
-		setUserLogin ({
-		 ...userLogin,
-		 [target.name]:target.value,
+	function handleChange({ target }) {
+		setUserLogin({
+			...userLogin,
+			[target.name]: target.value,
 		});
 
-	};
+	}
+
+
+
+    
 
 	const handleSubmit = async (event) => {
+		
 		event.preventDefault();
 		if (userLogin.user_name.trim() != "" && userLogin.password.trim() != "") {
-			
+
 		   let response = await actions.Login(userLogin);
 		   if (response){
-			navigate("/")}
-			window.location.reload();
+				
+				navigate("/home")};
+				actions.getPetitions();
+				window.location.reload();
+
 		} else {
-		 console.log("campos obligatorios");
-		} 
+		 console.log("campos obligatorios")
+		 ;
+		}
 	};
 
 
@@ -45,7 +56,7 @@ const Login = () => {
 						<div className="form- group">
 							<label>Usuario</label>
 							<input type="text"
-							 name="user_name" 
+							 name="user_name"
 							 className="form-control"
 							 onChange={handleChange}
 							 value={userLogin.usuario}
@@ -54,13 +65,14 @@ const Login = () => {
 
 						<div className="form- group">
 							<label>Contraseña</label>
-							<input type="password" 
-							name="password" 
+							<input type="password"
+							name="password"
 							className="form-control"
 							onChange={handleChange}
 							value={userLogin.password}
 							/>
 						</div>
+
 
 						<button className="btn btn-primary w-100 my-3">
 							Iniciar sesion

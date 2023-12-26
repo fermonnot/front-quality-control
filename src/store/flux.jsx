@@ -1,16 +1,19 @@
+import { Navigate } from "react-router";
+import useAuthContext from "../context/authContext"
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
 
-			token: localStorage.getItem("token") || "",
-			user_id: localStorage.getItem("user_id") || "",
+			userData: JSON.parse(localStorage.getItem("userData")) ?? null,
+			// user_id: localStorage.getItem("user_id") || "",
+
 			urlBase: "http://127.0.0.1:3005",
 			endPoint: "petitions",
 			petitions: [],
 			petition: [],
-			filterProducts: [],
-			ordenCo: []
+
 		},
 
 		actions: {
@@ -18,30 +21,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getPetitions: async () => {
 				let store = getStore()
 				try {
-					let response = await fetch(`${store.urlBase}/${store.endPoint}`,{
-						
+					let response = await fetch(`${store.urlBase}/${store.endPoint}`, {
+
 						method: 'GET',
 						headers: {
 							'Content-Type': 'application/json',
-							"Authorization": `Bearer ${store.token}`
+							"Authorization": `Bearer ${store.userData.token}`
 						},
-						
+
 					});
 					let data = await response.json();
-					
+
 					if (response.ok) {
 						setStore({
 							...store,
 							petitions: data
 						})
 
-				}
+					}
 				} catch (error) {
 
 					return console.log(error), 401
-					
+
 				}
 			},
+
 			userRegister: async (user) => {
 				let store = getStore();
 				try {
@@ -61,8 +65,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(`Error: ${error}`);
 				}
 			},
-			Login: async (user) => {
 
+			Login: async (user) => {
+				// const {setAuth} = useAuthContext();
 				let store = getStore()
 				try {
 					let response = await fetch(`${store.urlBase}/login`, {
@@ -74,12 +79,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 						body: JSON.stringify(user)
 					});
 					if (response.ok) {
-						
+
 						let data = await response.json();
-						setStore({ token: data.token, user_id: data.user_id });
-						localStorage.setItem("token", data.token, "user_id", data.user_id);
-						return true;	
-						
+						const userData = {
+							"token": data.token,
+							"user_id": data.user_id,
+							"role": data.roles_user
+						}
+						localStorage.setItem("userData", JSON.stringify(userData));
+
+						setStore(userData);
+
+						return true;
+
 					}
 					return false;
 
@@ -90,13 +102,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 			logout: () => {
-				localStorage.removeItem("token");
-				setStore({ token: "" });
+				localStorage.removeItem("userData");
+				setStore({ userData: "" });
 				window.location.reload();
 			},
 
 
+			// infoUser: () => {
+			// 	let store = getStore()
+			// 	store.
 
+			// },
 
 
 			addPetition: async (petition) => {
@@ -107,7 +123,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						method: "POST",
 						headers: {
 							'Content-Type': 'application/json',
-							"Authorization": `Bearer ${store.token}`
+							"Authorization": `Bearer ${store.userData.token}`
 						},
 
 						body: JSON.stringify(petition)
@@ -115,8 +131,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(response)
 					if (response.ok) {
 						getActions().getPetitions(),
-						
-						console.log("me guardé")
+
+							console.log("me guardé")
 					}
 
 				} catch (error) {
@@ -125,17 +141,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 
-			deleteProduct: async (product_id) => {
-				console.log(product_id)
+			deletePetition: async (petition_id) => {
+
 				let store = getStore()
 				try {
-					let response = await fetch(`${store.urlBase}/products/${product_id}`, {
+					let response = await fetch(`${store.urlBase}/${store.endPoint}/${petition_id}`, {
 						method: "DELETE",
-
+						headers: {
+							'Content-Type': 'application/json',
+							"Authorization": `Bearer ${store.userData.token}`
+						},
+						body: JSON.stringify(petition_id)
 					})
 					console.log(response)
 					if (response.ok) {
-						getActions().getProducts()
+						
+						const data = await response.json();
+						console.log(data);
+						getActions().getPetitions(), 300
 						console.log("me borré")
 					}
 
@@ -204,7 +227,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				} catch (error) {
 
-					console.log("explote",error)
+					console.log("explote", error)
 				}
 
 			},
@@ -216,7 +239,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					let response = await fetch(`${store.urlBase}/ordenco/${ordenco_id}`, {
 						method: "DELETE",
 						headers: {
-							
+
 							"Authorization": `Bearer ${store.token}`
 						},
 
