@@ -1,11 +1,12 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import useAuthContext from "../context/authContext";
+import { useNavigate } from "react-router";
 
 
 export const Home = () => {
     const { store, actions } = useContext(Context);
- 
+    let navigate = useNavigate();
   
     const handleDelete = (petition_id) => {
 
@@ -15,6 +16,20 @@ export const Home = () => {
              
     }
     console.log("este es ",useAuthContext())
+    
+   
+    
+    const handlePetition = (petition_id) => {
+        
+      
+        actions.consultPetition(petition_id)
+        navigate("/add-controlp")
+        
+    
+    }
+    
+    const petitionInfo = store.petition
+    console.log("esta es la info:",petitionInfo)
     
     return (
         <>
@@ -53,7 +68,11 @@ export const Home = () => {
                                     onClick={()=>handleDelete(petitions.id)}
                                     >Eliminar
                                 </button>
-
+                                <button type="buttom"
+                                    className="btn btn-primary m-1"
+                                    onClick={()=> handlePetition(petitions.id)}
+                                    >Gestionar
+                                </button>
                                 </td>
                             </tr>
                         )

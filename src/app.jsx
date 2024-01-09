@@ -10,6 +10,8 @@ import UserContextProvider from "../src/context/userContext"
 import RequireAuth from './context/requireAuth';
 import Layout from './layout';
 import Prueba from './vews/prubea';
+import { ControlsP } from './vews/controslP';
+import { NewControlP } from './vews/newControlP';
 
 function App() {
 
@@ -29,7 +31,10 @@ function App() {
 
 
                             <Route element={<PrivateRoute />}>
+
                                 <Route path="/home" element={<Home />} />;
+                                <Route path="/add-controlp" element={<NewControlP />} />;
+                                <Route path="/controlsp" element={<ControlsP />} />;
                                 <Route path="/petitions" element={<Petition />} />
                                 <Route path="/prueba/" element={<Prueba />} />
 

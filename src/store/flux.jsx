@@ -12,7 +12,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			urlBase: "http://127.0.0.1:3005",
 			endPoint: "petitions",
 			petitions: [],
-			petition: [],
+			petition: [],	
+			controlsp: [],
+			controlp: []
 
 		},
 
@@ -108,13 +110,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 
-			// infoUser: () => {
-			// 	let store = getStore()
-			// 	store.
-
-			// },
-
-
 			addPetition: async (petition) => {
 				let store = getStore()
 
@@ -167,94 +162,177 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 			},
+			consultPetition: async (petition_id) => {
 
-
-			getOrdenCo: async () => {
 				let store = getStore()
 				try {
-					let response = await fetch(`${store.urlBase}/ordenco`,
-						{
-							headers: {
-								"Content-Type": "application/json",
-								"Authorization": `Bearer ${store.token}`
-							},
-						})
+					let response = await fetch(`${store.urlBase}/${store.endPoint}/${petition_id}`, {
+						method: "GET",
+						headers: {
+							'Content-Type': 'application/json',
+							"Authorization": `Bearer ${store.userData.token}`
+						},
+						
+					})
+						
+					if (response.ok) {
+						
+						const data = await response.json();
+						console.log(data);	
+						setStore({
+							...store,
+							petition: data 	
+						})	
+					}
 
+				} catch (error) {
+					console.log(error)
+				}
+
+			},
+
+			getControlP: async () => {
+				let store = getStore()
+				try {
+					let response = await fetch(`${store.urlBase}/controlsp`, {
+
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+							"Authorization": `Bearer ${store.userData.token}`
+						},
+
+					});
 					let data = await response.json();
-					console.log(data)
+
 					if (response.ok) {
 						setStore({
 							...store,
-							ordenCo: data
+							controlsp: data
 						})
 
 					}
 				} catch (error) {
 
-					console.log(error)
+					return console.log(error), 401
+
 				}
 			},
 
 
-			filterProducts: async (description) => {
-				let store = getStore()
-				let filtered = store.products.filter((product) => product.description.includes(description) == true)
-				setStore({
-
-					...store,
-					filterProducts: filtered
-				})
-				console.log(filtered)
-			},
-
-			addOrdenCo: async (ordenco) => {
+			addControlP: async (cpetition) => {
 				let store = getStore()
 
 				try {
-					let response = await fetch(`${store.urlBase}/ordenco`, {
+					let response = await fetch(`${store.urlBase}/controlp`, {
 						method: "POST",
 						headers: {
-							"Content-Type": "application/json",
-							"Authorization": `Bearer ${store.token}`
+							'Content-Type': 'application/json',
+							"Authorization": `Bearer ${store.userData.token}`
 						},
-						body: JSON.stringify(ordenco)
+
+						body: JSON.stringify(cpetition)
 					})
 					console.log(response)
 					if (response.ok) {
+						getActions().getControlP(),
 
-						getActions().getOrdenCo()
+							console.log("me guardé")
 					}
 
 				} catch (error) {
-
-					console.log("explote", error)
+					console.log("explote"(error))
 				}
 
 			},
 
-			deleteOrdenCo: async (ordenco_id) => {
-				console.log(ordenco_id)
-				let store = getStore()
-				try {
-					let response = await fetch(`${store.urlBase}/ordenco/${ordenco_id}`, {
-						method: "DELETE",
-						headers: {
 
-							"Authorization": `Bearer ${store.token}`
-						},
 
-					})
-					console.log(response)
-					if (response.ok) {
-						getActions().getOrdenCo()
-						console.log("me borré")
-					}
+			// getOrdenCo: async () => {
+			// 	let store = getStore()
+			// 	try {
+			// 		let response = await fetch(`${store.urlBase}/ordenco`,
+			// 			{
+			// 				headers: {
+			// 					"Content-Type": "application/json",
+			// 					"Authorization": `Bearer ${store.token}`
+			// 				},
+			// 			})
 
-				} catch (error) {
-					console.log(error)
-				}
+			// 		let data = await response.json();
+			// 		console.log(data)
+			// 		if (response.ok) {
+			// 			setStore({
+			// 				...store,
+			// 				ordenCo: data
+			// 			})
 
-			},
+			// 		}
+			// 	} catch (error) {
+
+			// 		console.log(error)
+			// 	}
+			// },
+
+
+			// filterProducts: async (description) => {
+			// 	let store = getStore()
+			// 	let filtered = store.products.filter((product) => product.description.includes(description) == true)
+			// 	setStore({
+
+			// 		...store,
+			// 		filterProducts: filtered
+			// 	})
+			// 	console.log(filtered)
+			// },
+
+			// addOrdenCo: async (ordenco) => {
+			// 	let store = getStore()
+
+			// 	try {
+			// 		let response = await fetch(`${store.urlBase}/ordenco`, {
+			// 			method: "POST",
+			// 			headers: {
+			// 				"Content-Type": "application/json",
+			// 				"Authorization": `Bearer ${store.token}`
+			// 			},
+			// 			body: JSON.stringify(ordenco)
+			// 		})
+			// 		console.log(response)
+			// 		if (response.ok) {
+
+			// 			getActions().getOrdenCo()
+			// 		}
+
+			// 	} catch (error) {
+
+			// 		console.log("explote", error)
+			// 	}
+
+			// },
+
+			// deleteOrdenCo: async (ordenco_id) => {
+			// 	console.log(ordenco_id)
+			// 	let store = getStore()
+			// 	try {
+			// 		let response = await fetch(`${store.urlBase}/ordenco/${ordenco_id}`, {
+			// 			method: "DELETE",
+			// 			headers: {
+
+			// 				"Authorization": `Bearer ${store.token}`
+			// 			},
+
+			// 		})
+			// 		console.log(response)
+			// 		if (response.ok) {
+			// 			getActions().getOrdenCo()
+			// 			console.log("me borré")
+			// 		}
+
+			// 	} catch (error) {
+			// 		console.log(error)
+			// 	}
+
 		}
 
 	};

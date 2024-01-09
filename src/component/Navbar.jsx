@@ -41,6 +41,15 @@ export function Navbar() {
 
                            
                         </li>
+                        <li>
+                            {userData ? (
+                                <Link to="/add-controlp" className="nav-link active" aria-current="page" href="#"> Gestionar las Peticiones</Link>
+                            ) : (
+                               null
+                            )}
+
+                           
+                        </li>
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Dropdown link
