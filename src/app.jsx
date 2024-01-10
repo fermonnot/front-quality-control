@@ -33,7 +33,7 @@ function App() {
                             <Route element={<PrivateRoute />}>
 
                                 <Route path="/home" element={<Home />} />;
-                                <Route path="/add-controlp" element={<NewControlP />} />;
+                                <Route path="/add-controlp/:id" element={<NewControlP />} />;
                                 <Route path="/controlsp" element={<ControlsP />} />;
                                 <Route path="/petitions" element={<Petition />} />
                                 <Route path="/prueba/" element={<Prueba />} />

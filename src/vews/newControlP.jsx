@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useContext, Date } from 'react';
+import React, { useState, useContext } from 'react';
 import { Context } from '../store/appContext';
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 
@@ -11,7 +11,8 @@ import "../styles/petition.css"
 
 export const NewControlP = () => {
     const { store, actions } = useContext(Context);
-
+    let {id} = useParams();
+    console.log("este es petitionId:", id)
     const getPetitionId = store.petition.id
     console.log("este es el id de la peticion:",getPetitionId)
     
@@ -26,7 +27,8 @@ export const NewControlP = () => {
         status: '',
         date_finished_petition: '',
         observation: '',
-        petition_id: JSON.stringify(store.petition.id)
+        // petition_id: ,
+        petition_id: id
 
     };
 

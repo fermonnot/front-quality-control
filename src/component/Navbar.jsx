@@ -43,6 +43,15 @@ export function Navbar() {
                         </li>
                         <li>
                             {userData ? (
+                                <Link to="/controlsp" className="nav-link active" aria-current="page" href="#"> Histiorico de Cambios</Link>
+                            ) : (
+                               null
+                            )}
+
+                           
+                        </li>
+                        <li>
+                            {userData ? (
                                 <Link to="/add-controlp" className="nav-link active" aria-current="page" href="#"> Gestionar las Peticiones</Link>
                             ) : (
                                null

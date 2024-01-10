@@ -45,7 +45,7 @@ export const ControlsP = () => {
                         return (
                             <tr key={index}>
                                 <th scope="row">{index + 1}</th>
-                                {/* <td>{con.created}</td> */}
+                                <td>{controlsp.date_petition}</td>
                                 <td>{controlsp.process_affected}</td>
                                 <td>{controlsp.name_customer}</td>
                                 <td>{controlsp.process_costumer}</td>

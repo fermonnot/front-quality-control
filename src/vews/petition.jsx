@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { Context } from '../store/appContext';
 import { Navigate, useNavigate } from "react-router-dom";
 
@@ -50,6 +50,7 @@ export const Petition = () => {
                 console.log("me guardé")
             };
             window.location.reload();
+            
         } else {
             console.log("campos obligatorios");
         }
@@ -60,7 +61,7 @@ export const Petition = () => {
             <h1>Nueva Peticion</h1>
             <h4>En este formulario ingresa todos los datos requeridos de la solicitud que deseas ingresar a el proceso de Gestión de la calidad</h4>
             <div id="div-margen">
-                <form onSubmit={handleSubmit}>
+                <form id='formRef'  >
                     <div className="form-floating mb-3">
                         <input type="text" className="form-control"
                             onChange={handleChange}

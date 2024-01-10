@@ -1,13 +1,15 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import useAuthContext from "../context/authContext";
 import { useNavigate } from "react-router";
+import { useParams } from "react-router-dom";
 
 
 export const Home = () => {
     const { store, actions } = useContext(Context);
     let navigate = useNavigate();
-  
+    
+
     const handleDelete = (petition_id) => {
 
         
@@ -23,7 +25,7 @@ export const Home = () => {
         
       
         actions.consultPetition(petition_id)
-        navigate("/add-controlp")
+        navigate(`/add-controlp/${petition_id}`)
         
     
     }
