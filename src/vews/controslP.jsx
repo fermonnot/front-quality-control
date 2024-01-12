@@ -28,12 +28,12 @@ export const ControlsP = () => {
                         <th scope="col">Procesos Afectados</th>
                         <th scope="col">Nombre del Solicitante</th>
                         <th scope="col">Proceso Solicitante </th>
-                        <th scope="col">Justificación del cambio</th>
                         <th scope="col">Fecha de envio de archivo </th>
                         <th scope="col">Fecha de recibo de archivo</th>
                         <th scope="col">Estado de solicitud</th>
                         <th scope="col">Fecha de cierre de solicitud</th> 
                         <th scope="col">Observación</th>
+                        
                         <th scope="col">Ultima Actualización</th>
                         
 
@@ -48,7 +48,7 @@ export const ControlsP = () => {
                                 <td>{controlsp.date_petition}</td>
                                 <td>{controlsp.process_affected}</td>
                                 <td>{controlsp.name_customer}</td>
-                                <td>{controlsp.process_costumer}</td>
+                                <td>{controlsp.process_customer}</td>
                                 <td>{controlsp.date_petition_sent}</td>
                                 <td>{controlsp.date_petition_received}</td>
                                 <td>{controlsp.status}</td>
@@ -56,14 +56,6 @@ export const ControlsP = () => {
                                 <td>{controlsp.observation}</td>
                                 <td>{controlsp.update_at}</td>
                                 
-                                <td>                                  
-                                <button type="buttom"
-                                    className="btn btn-primary"
-                                    onClick={()=>handleDelete(petitions.id)}
-                                    >Eliminar
-                                </button>
-
-                                </td>
                             </tr>
                         )
                     })}

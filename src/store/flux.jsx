@@ -204,7 +204,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					});
 					let data = await response.json();
-
+					console.log('data:',data)
 					if (response.ok) {
 						setStore({
 							...store,
@@ -246,7 +246,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 
+			editControlP: async (cpetition) => {
+				let store = getStore()
 
+				try {
+					let response = await fetch(`${store.urlBase}/controlsp/<int:controlp_id>`, {
+						method: "PUT",
+						headers: {
+							'Content-Type': 'application/json',
+							"Authorization": `Bearer ${store.userData.token}`
+						},
+
+						body: JSON.stringify(cpetition)
+					})
+					console.log(response)
+					if (response.ok) {
+						getActions().getControlP(),
+
+							console.log("me guardé")
+					}
+
+				} catch (error) {
+					console.log("explote"(error))
+				}
+
+			},
 
 			// getOrdenCo: async () => {
 			// 	let store = getStore()

@@ -27,7 +27,6 @@ export const NewControlP = () => {
         status: '',
         date_finished_petition: '',
         observation: '',
-        // petition_id: ,
         petition_id: id
 
     };
