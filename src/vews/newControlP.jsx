@@ -128,16 +128,6 @@ export const NewControlP = () => {
                         </textarea>
                         <label for="floatingTextarea">Nombre del cliente que solicita el cambio</label>
                     </div>
-                    {/* <div className="form-floating mb-3">
-                        <textarea className="form-control"
-                            onChange={handleChange}
-                            name='process_customer'
-                            value={qualityPetition.process_customer}
-                            placeholder="Decribe el cambio que deseas"
-                            id="floatingTextarea">
-                        </textarea>
-                        <label for="floatingTextarea">Nombre del proceso que solicita el cambio</label>
-                    </div> */}
                     <div className="form-floating mb-3">
                         <textarea className="form-control"
                             onChange={handleChange}
