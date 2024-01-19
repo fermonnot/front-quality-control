@@ -10,8 +10,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// user_id: localStorage.getItem("user_id") || "",
 
 			urlBase: "http://127.0.0.1:3005",
-			endPoint: "petitions",
+			endPoint: "petitions-active",
 			petitions: [],
+			petitions_active: [],
 			petition: [],	
 			controlsp: [],
 			controlp: []
@@ -178,7 +179,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					if (response.ok) {
 						
 						const data = await response.json();
-						console.log(data);	
+						console.log("ESTA ES DATA",data);	
 						setStore({
 							...store,
 							petition: data 	
@@ -204,7 +205,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					});
 					let data = await response.json();
-					console.log('data:',data)
+					console.log('este es el CONTROL PETITION:',data)
 					if (response.ok) {
 						setStore({
 							...store,
@@ -217,6 +218,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return console.log(error), 401
 
 				}
+			},
+
+			editPetition: async (petition_id) => {
+				let store = getStore()
+				let active_petition = {"is_active": false}
+				try {
+					let response = await fetch(`${store.urlBase}/petitions-active/${petition_id}`, {
+						method: "PATCH",
+						headers: {
+							'Content-Type': 'application/json',
+							"Authorization": `Bearer ${store.userData.token}`
+						},
+
+						body: JSON.stringify(active_petition)
+					})
+					console.log(response)
+					if (response.ok) {
+						
+						console.log("me volvi inactiva")
+					}
+
+				} catch (error) {
+					console.log("explote"(error))
+				}
+
 			},
 
 
@@ -235,9 +261,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					console.log(response)
 					if (response.ok) {
-						getActions().getControlP(),
-
-							console.log("me guardé")
+						
+						console.log("me guardé")
 					}
 
 				} catch (error) {
@@ -271,92 +296,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 			},
+				// handleDate(): () => {
 
-			// getOrdenCo: async () => {
-			// 	let store = getStore()
-			// 	try {
-			// 		let response = await fetch(`${store.urlBase}/ordenco`,
-			// 			{
-			// 				headers: {
-			// 					"Content-Type": "application/json",
-			// 					"Authorization": `Bearer ${store.token}`
-			// 				},
-			// 			})
+				// }
 
-			// 		let data = await response.json();
-			// 		console.log(data)
-			// 		if (response.ok) {
-			// 			setStore({
-			// 				...store,
-			// 				ordenCo: data
-			// 			})
-
-			// 		}
-			// 	} catch (error) {
-
-			// 		console.log(error)
-			// 	}
-			// },
+			
 
 
-			// filterProducts: async (description) => {
-			// 	let store = getStore()
-			// 	let filtered = store.products.filter((product) => product.description.includes(description) == true)
-			// 	setStore({
-
-			// 		...store,
-			// 		filterProducts: filtered
-			// 	})
-			// 	console.log(filtered)
-			// },
-
-			// addOrdenCo: async (ordenco) => {
-			// 	let store = getStore()
-
-			// 	try {
-			// 		let response = await fetch(`${store.urlBase}/ordenco`, {
-			// 			method: "POST",
-			// 			headers: {
-			// 				"Content-Type": "application/json",
-			// 				"Authorization": `Bearer ${store.token}`
-			// 			},
-			// 			body: JSON.stringify(ordenco)
-			// 		})
-			// 		console.log(response)
-			// 		if (response.ok) {
-
-			// 			getActions().getOrdenCo()
-			// 		}
-
-			// 	} catch (error) {
-
-			// 		console.log("explote", error)
-			// 	}
-
-			// },
-
-			// deleteOrdenCo: async (ordenco_id) => {
-			// 	console.log(ordenco_id)
-			// 	let store = getStore()
-			// 	try {
-			// 		let response = await fetch(`${store.urlBase}/ordenco/${ordenco_id}`, {
-			// 			method: "DELETE",
-			// 			headers: {
-
-			// 				"Authorization": `Bearer ${store.token}`
-			// 			},
-
-			// 		})
-			// 		console.log(response)
-			// 		if (response.ok) {
-			// 			getActions().getOrdenCo()
-			// 			console.log("me borré")
-			// 		}
-
-			// 	} catch (error) {
-			// 		console.log(error)
-			// 	}
-
+			
 		}
 
 	};

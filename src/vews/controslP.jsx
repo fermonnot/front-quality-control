@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import useAuthContext from "../context/authContext";
+import { getDate } from "../helpers/date";
 
 
 export const ControlsP = () => {
@@ -21,6 +22,8 @@ export const ControlsP = () => {
         
 
     }
+    // const getUpdateDate = getDate(store.ControlsP.update_at)
+    // console.log("este es el getUpadeData", getUpdateDate)
     console.log("este es el id de la petición rata",handlePetition())
     return ( 
         <>
@@ -30,7 +33,7 @@ export const ControlsP = () => {
                     <thead className="border-end">
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Fecha de petición</th>
+                            <th scope="col">Fecha de creacion del historico del cambio</th>
                             <th scope="col">Procesos Afectados</th>
                             <th scope="col">Nombre del Solicitante</th>
                             <th scope="col">Proceso Solicitante </th>
@@ -39,7 +42,6 @@ export const ControlsP = () => {
                             <th scope="col">Estado de solicitud</th>
                             <th scope="col">Fecha de cierre de solicitud</th>
                             <th scope="col">Observación</th>
-
                             <th scope="col">Ultima Actualización</th>
                             <th scope="col">Datos del cambio</th>
                             <th scope="col">ID DEL CAMBIO</th>
@@ -53,8 +55,8 @@ export const ControlsP = () => {
 
                             return (
                                 <tr key={index}>
-                                    <th scope="row">{index + 1}</th>
-                                    <td>{controlsp.date_petition}</td>
+                                    <th scope="row">{index + 1}</th>    
+                                    <td>{getDate(controlsp.date_petition)}</td>
                                     <td>{controlsp.process_affected}</td>
                                     <td>{controlsp.name_customer}</td>
                                     <td>{controlsp.process_customer}</td>
@@ -63,7 +65,7 @@ export const ControlsP = () => {
                                     <td>{controlsp.status}</td>
                                     <td>{controlsp.date_finished_petition}</td>
                                     <td>{controlsp.observation}</td>
-                                    <td>{controlsp.update_at}</td>
+                                    <td>{getDate(controlsp.update_at)}</td>
                                     
                                     
                                     <td>
@@ -71,7 +73,7 @@ export const ControlsP = () => {
                                             className="btn btn-primary m-1" data-bs-toggle="modal" 
                                             data-bs-target="#exampleModal"
                                             onClick={() => handlePetition(controlsp.petition_id)}
-                                        >Gestionar
+                                        >Observar
                                         </button>       
                                     </td>
                                     <td>{controlsp.petition_id}</td>
@@ -87,12 +89,13 @@ export const ControlsP = () => {
                     <div className="modal-dialog modal-dialog-scrollable">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h1 className="modal-title fs-5" id="exampleModalLabel">Verifica todos los campos, por favor!</h1>
+                                <h1 className="modal-title fs-5" id="exampleModalLabel">Estos son los datos de la peticion gestionada</h1>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="modal-body">
                                 <ul>
                                     <li>ID DEL CAMBIO del documento: {store.petition.id}</li>
+                                    <li>creación del CAMBIO del documento: {getDate(store.petition.created)}</li>
                                     <li>Codigo del documento: {store.petition.code}</li>
                                     <li>Titulo del documento: {store.petition.document_title}</li>
                                     <li>Descripción del cambio: {store.petition.change_description}</li>

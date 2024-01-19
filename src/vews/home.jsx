@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import useAuthContext from "../context/authContext";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
+import { getDate } from "../helpers/date";
 
 
 export const Home = () => {
@@ -19,7 +20,10 @@ export const Home = () => {
     }
     console.log("este es ",useAuthContext())
     
-   
+    // let dateFromDB = new Date(store.petition.created); // Ejemplo de fecha obtenida de la base de datos
+    // let options = { timeZone: 'America/Caracas', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+    // let formattedDate = new Intl.DateTimeFormat('es-VE', options).format(dateFromDB);
+    // console.log(formattedDate);
     
     const handlePetition = (petition_id) => {
         
@@ -57,7 +61,7 @@ export const Home = () => {
                         return (
                             <tr key={index}>
                                 <th scope="row">{index + 1}</th>
-                                <td>{petitions.created}</td>
+                                <td>{getDate(petitions.created)}</td>
                                 <td>{petitions.code}</td>
                                 <td>{petitions.document_title}</td>
                                 <td>{petitions.change_description}</td>

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Context } from '../store/appContext';
 import { useNavigate, useParams } from "react-router-dom";
-
+import { getDate } from '../helpers/date';
 
 
 import "../styles/petition.css"
@@ -11,14 +11,16 @@ import "../styles/petition.css"
 
 export const NewControlP = () => {
     const { store, actions } = useContext(Context);
-    let {id} = useParams();
+    let { id } = useParams();
     console.log("este es petitionId:", id)
-    const getPetitionId = store.petition.id
-    console.log("este es el id de la peticion:",getPetitionId)
+    const getPetitionId = store.petition.created
+    console.log("fecha inicial", getPetitionId)
     
+    // console.log("este es el id de la peticion:", getDatePet)
+
 
     let initState = {
-        
+
         process_affected: '',
         name_customer: '',
         process_customer: '',
@@ -47,18 +49,20 @@ export const NewControlP = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        if (qualityPetition.process_affected.trim() != "" && qualityPetition.name_customer.trim() != "" && qualityPetition.process_customer.trim() != "" && qualityPetition.date_petition_sent.trim() != "" && qualityPetition.date_petition_received.trim() != "" && qualityPetition.status.trim() != "" && qualityPetition.date_finished_petition.trim() != "" && qualityPetition.observation.trim() != ""  && qualityPetition.petition_id.trim() != "") {
+        if (qualityPetition.process_affected.trim() != "" && qualityPetition.name_customer.trim() != "" && qualityPetition.process_customer.trim() != "" && qualityPetition.date_petition_sent.trim() != "" && qualityPetition.date_petition_received.trim() != "" && qualityPetition.status.trim() != "" && qualityPetition.date_finished_petition.trim() != "" && qualityPetition.observation.trim() != "" && qualityPetition.petition_id.trim() != "") {
 
             let response = await actions.addControlP(qualityPetition);
             console.log(response)
             if (response) {
                 console.log("me guardé")
             };
+            actions.editPetition(id);
             window.location.reload();
         } else {
             console.log("campos obligatorios");
         }
     };
+    getDate()
 
     return (
         <>
@@ -79,7 +83,7 @@ export const NewControlP = () => {
                 <tbody>
                     <tr >
                         <th scope="row">{store.petition.id}</th>
-                        <td>{store.petition.created}</td>
+                        <td>{getDate(getPetitionId)}</td>
                         <td>{store.petition.code}</td>
                         <td>{store.petition.document_title}</td>
                         <td>{store.petition.change_description}</td>
@@ -108,7 +112,7 @@ export const NewControlP = () => {
             <h4>En este formulario ingresa todos los datos requeridos para generar el registro en el Historico de cambios</h4>
             <div id="div-margen">
                 <form onSubmit={handleSubmit}>
-                   
+
                     <div className="form-floating mb-3">
                         <input type="text" className="form-control"
                             onChange={handleChange}
@@ -210,7 +214,7 @@ export const NewControlP = () => {
                             </div>
                             <div className="modal-body">
                                 <ul>
-                                  
+
                                     <li>Procesos afectados con el cambio: {qualityPetition.process_affected}</li>
                                     <li>Nombre del usuario solicitante {qualityPetition.name_customer}</li>
                                     <li>Proceso solicitando el cambio: {qualityPetition.process_customer}</li>
@@ -219,7 +223,7 @@ export const NewControlP = () => {
                                     <li>Estado de la petición: {qualityPetition.status}</li>
                                     <li>Fecha de finalización del cambio: {qualityPetition.date_finished_petition}</li>
                                     <li>Observación:{qualityPetition.observation}</li>
-                                    
+
                                 </ul>
                             </div>
                             <div className="modal-footer">

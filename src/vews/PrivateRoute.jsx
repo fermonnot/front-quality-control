@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { NavLink, Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Navigate, Outlet } from 'react-router-dom';
 
 import useAuthContext from '../context/authContext';
 
@@ -7,9 +7,7 @@ import useAuthContext from '../context/authContext';
 
 const PrivateRoute = () => {
 
-    const location = useLocation();
     const auth =  useAuthContext();
-    const navigate = useNavigate()
     // const from = location.state?.from || '/default';
     console.log("este es el auth:", auth[0].userData)
     if (auth[0].userData == null) {
