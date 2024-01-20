@@ -2,11 +2,12 @@ import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import useAuthContext from "../context/authContext";
 import { getDate } from "../helpers/date";
+import { useNavigate } from "react-router";
 
 
 export const ControlsP = () => {
     const { store, actions } = useContext(Context);
-
+    let navigate = useNavigate();
 
     // const handleDelete = (petition_id) => {
 
@@ -19,6 +20,14 @@ export const ControlsP = () => {
     const handlePetition = (petition_id) => {
 
         actions.consultPetition(petition_id)
+        
+
+    }
+    const handleControlP = (controlp_id) => {
+        
+
+        actions.consultControlP(controlp_id)
+        navigate(`/update-controlp/${controlp_id}`)
         
 
     }
@@ -65,7 +74,7 @@ export const ControlsP = () => {
                                     <td>{controlsp.status}</td>
                                     <td>{controlsp.date_finished_petition}</td>
                                     <td>{controlsp.observation}</td>
-                                    <td>{getDate(controlsp.update_at)}</td>
+                                    <td>{getDate(controlsp.updated_at)}</td>
                                     
                                     
                                     <td>
@@ -76,7 +85,13 @@ export const ControlsP = () => {
                                         >Observar
                                         </button>       
                                     </td>
-                                    <td>{controlsp.petition_id}</td>
+                                    <td>
+                                        <button type="buttom"
+                                            className="btn btn-primary m-1"  
+                                            onClick={() =>handleControlP(controlsp.id)}
+                                        >Modificar
+                                        </button>       
+                                    </td>
 
                                 </tr>
                             )

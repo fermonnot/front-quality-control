@@ -9,18 +9,18 @@ import "../styles/petition.css"
 
 
 
-export const NewControlP = () => {
+export const EditControlP = () => {
     const { store, actions } = useContext(Context);
     let { id } = useParams();
     console.log("este es petitionId:", id)
-    const getPetitionId = store.petition.id
-    console.log("fecha inicial", getPetitionId)
+    const getControlPetitionId = store.controlp.id
+    console.log("fecha inicial", getControlPetitionId)
     
     // console.log("este es el id de la peticion:", getDatePet)
 
 
     let initState = {
-
+        id: getControlPetitionId,
         process_affected: '',
         name_customer: '',
         process_customer: '',
@@ -28,8 +28,7 @@ export const NewControlP = () => {
         date_petition_received: '',
         status: '',
         date_finished_petition: '',
-        observation: '',
-        petition_id: id
+        observation: ''
 
     };
 
@@ -49,15 +48,15 @@ export const NewControlP = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        if (qualityPetition.process_affected.trim() != "" && qualityPetition.name_customer.trim() != "" && qualityPetition.process_customer.trim() != "" && qualityPetition.date_petition_sent.trim() != "" && qualityPetition.date_petition_received.trim() != "" && qualityPetition.status.trim() != "" && qualityPetition.date_finished_petition.trim() != "" && qualityPetition.observation.trim() != "" && qualityPetition.petition_id.trim() != "") {
-
-            let response = await actions.addControlP(qualityPetition);
+        if (qualityPetition.process_affected.trim() != "" && qualityPetition.name_customer.trim() != "" && qualityPetition.process_customer.trim() != "" && qualityPetition.date_petition_sent.trim() != "" && qualityPetition.date_petition_received.trim() != "" && qualityPetition.status.trim() != "" && qualityPetition.date_finished_petition.trim() != "" && qualityPetition.observation.trim() != "") {
+           
+            let response = await actions.editControlP(qualityPetition);
             console.log(response)
             if (response) {
                 console.log("me guardé")
             };
-            actions.editPetition(id);
-            window.location.reload();
+            // actions.editPetition(id);
+            // window.location.reload();
         } else {
             console.log("campos obligatorios");
         }
@@ -71,25 +70,28 @@ export const NewControlP = () => {
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Fecha de creación</th>
-                        <th scope="col">Codigo de documento</th>
-                        <th scope="col">Titulo</th>
-                        <th scope="col">Descripción del cambio </th>
-                        <th scope="col">Justificación del cambio</th>
-                        <th scope="col">Tipo de documento</th>
-                        <th scope="col">Tipo de cambio</th>
-                        <th scope="col">Acción</th>
+                        <th scope="col">Procesos afectados</th>
+                        <th scope="col">Nombre del cliente que solicita el cambio</th>
+                        <th scope="col">Fecha de envío del Documento</th>
+                        <th scope="col">Fecha de recepción del Documento</th>
+                        <th scope="col">Fecha de finalización del cambio</th>
+                        <th scope="col">Proceso solicitante</th>
+                        <th scope="col">Estado del trámite</th>
+                        <th scope="col">Observación</th>
+
                     </tr>
                 </thead>
                 <tbody>
                     <tr >
-                        <th scope="row">{store.petition.id}</th>
-                        <td>{getDate(getPetitionId)}</td>
-                        <td>{store.petition.code}</td>
-                        <td>{store.petition.document_title}</td>
-                        <td>{store.petition.change_description}</td>
-                        <td>{store.petition.change_justify}</td>
-                        <td>{store.petition.type_document}</td>
-                        <td>{store.petition.change_type}</td>
+                        <th scope="row">{store.controlp.id}</th>
+                        <td>{getDate(store.controlp.date_petition)}</td>
+                        <td>{store.controlp.process_affected}</td>
+                        <td>{store.controlp.name_customer}</td>
+                        <td>{store.controlp.date_petition_sent}</td>
+                        <td>{store.controlp.date_petition_received}</td>
+                        <td>{store.controlp.date_finished_petition}</td>
+                        <td>{store.controlp.status}</td>
+                        <td>{store.controlp.observation}</td>
                         <td>
                             <button type="buttom"
                                 className="btn btn-primary"
@@ -105,11 +107,10 @@ export const NewControlP = () => {
                         </td>
                     </tr>
 
-
                 </tbody>
             </table>
-            <h1> Gestion de Documento</h1>
-            <h4>En este formulario ingresa todos los datos requeridos para generar el registro en el Historico de cambios</h4>
+            <h1> Edicion de registro del Control de cambio</h1>
+            <h4>En este formulario ingresa todos los datos requeridos para EDITAR el registro en el Historico de cambios</h4>
             <div id="div-margen">
                 <form onSubmit={handleSubmit}>
 
@@ -200,7 +201,7 @@ export const NewControlP = () => {
                     </div>
                     <div className="d-grid gap-2 col-6 mx-auto">
                         <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            Generar Solicitud
+                            Editar Solicitud
                         </button>
                     </div>
                 </form>
@@ -228,7 +229,7 @@ export const NewControlP = () => {
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" className="btn btn-primary" onClick={handleSubmit}>Save changes</button>
+                                <button type="button" className="btn btn-primary" onClick={handleSubmit}>Editar Control de Cambio</button>
                             </div>
                         </div>
                     </div>

@@ -1,5 +1,6 @@
 import { Navigate } from "react-router";
 import useAuthContext from "../context/authContext"
+import { getDate } from "../helpers/date";
 
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
@@ -137,6 +138,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 
+			editPetition: async (petition_id) => {
+				let store = getStore()
+				let active_petition = {"is_active": false}
+				try {
+					let response = await fetch(`${store.urlBase}/petitions-active/${petition_id}`, {
+						method: "PATCH",
+						headers: {
+							'Content-Type': 'application/json',
+							"Authorization": `Bearer ${store.userData.token}`
+						},
+
+						body: JSON.stringify(active_petition)
+					})
+					console.log(response)
+					if (response.ok) {
+						
+						console.log("me volvi inactiva")
+					}
+
+				} catch (error) {
+					console.log("explote"(error))
+				}
+
+			},
+
 			deletePetition: async (petition_id) => {
 
 				let store = getStore()
@@ -205,7 +231,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					});
 					let data = await response.json();
-					console.log('este es el CONTROL PETITION:',data)
+					console.log('este es el CONTROL PETITIONS:',data)
 					if (response.ok) {
 						setStore({
 							...store,
@@ -213,37 +239,45 @@ const getState = ({ getStore, getActions, setStore }) => {
 						})
 
 					}
+					console.log("este es el store de CONTROLSP:",getDate( store.controlsp.update_at))
 				} catch (error) {
 
 					return console.log(error), 401
 
 				}
 			},
+			
 
-			editPetition: async (petition_id) => {
+			consultControlP: async (controlp_id) => {
+
 				let store = getStore()
-				let active_petition = {"is_active": false}
 				try {
-					let response = await fetch(`${store.urlBase}/petitions-active/${petition_id}`, {
-						method: "PATCH",
+					let response = await fetch(`${store.urlBase}/controlsp/${controlp_id}`, {
+						method: "GET",
 						headers: {
 							'Content-Type': 'application/json',
 							"Authorization": `Bearer ${store.userData.token}`
 						},
-
-						body: JSON.stringify(active_petition)
+						
 					})
-					console.log(response)
+						
 					if (response.ok) {
 						
-						console.log("me volvi inactiva")
+						const data = await response.json();
+						console.log("ESTA ES DATA",data);	
+						setStore({
+							...store,
+							controlp: data 	
+						})	
 					}
 
 				} catch (error) {
-					console.log("explote"(error))
+					console.log(error)
 				}
 
 			},
+
+			
 
 
 			addControlP: async (cpetition) => {
@@ -271,18 +305,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 
-			editControlP: async (cpetition) => {
+			editControlP: async (cnpetition, controlp_id) => {
 				let store = getStore()
 
 				try {
-					let response = await fetch(`${store.urlBase}/controlsp/<int:controlp_id>`, {
-						method: "PUT",
+					let response = await fetch(`${store.urlBase}/controlsp/${controlp_id}`, {
+						method: "PATCH",
 						headers: {
 							'Content-Type': 'application/json',
 							"Authorization": `Bearer ${store.userData.token}`
 						},
 
-						body: JSON.stringify(cpetition)
+						body: JSON.stringify(cnpetition)
 					})
 					console.log(response)
 					if (response.ok) {
@@ -296,9 +330,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 
 			},
-				// handleDate(): () => {
-
-				// }
 
 			
 

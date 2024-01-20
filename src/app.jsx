@@ -12,6 +12,7 @@ import Layout from './layout';
 import Prueba from './vews/prubea';
 import { ControlsP } from './vews/controslP';
 import { NewControlP } from './vews/newControlP';
+import { EditControlP } from './vews/editControlP';
 import QualityRoutes from './vews/QualityRoutes';
 
 function App() {
@@ -35,7 +36,7 @@ function App() {
                                 <Route element={<QualityRoutes/>}>
                                     <Route path="/home" element={<Home />}/>;
                                     <Route path="/add-controlp/:id" element={<NewControlP />} />;
-                                    <Route path="/update-controlp/:id" element={<NewControlP />} />;
+                                    <Route path="/update-controlp/:id" element={<EditControlP />} />;
 
                                     <Route path="/controlsp" element={<ControlsP />} />;
                                     <Route path="/petitions" element={<Petition />} />
