@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Context } from '../store/appContext';
 import { useNavigate, useParams } from "react-router-dom";
 import { getDate } from '../helpers/date';
-
+import Swal from 'sweetalert2';
 
 import "../styles/petition.css"
 
@@ -20,7 +20,6 @@ export const EditControlP = () => {
 
 
     let initState = {
-        id: getControlPetitionId,
         process_affected: '',
         name_customer: '',
         process_customer: '',
@@ -50,13 +49,21 @@ export const EditControlP = () => {
 
         if (qualityPetition.process_affected.trim() != "" && qualityPetition.name_customer.trim() != "" && qualityPetition.process_customer.trim() != "" && qualityPetition.date_petition_sent.trim() != "" && qualityPetition.date_petition_received.trim() != "" && qualityPetition.status.trim() != "" && qualityPetition.date_finished_petition.trim() != "" && qualityPetition.observation.trim() != "") {
            
-            let response = await actions.editControlP(qualityPetition);
+            let response = await actions.editControlP( id, qualityPetition);
             console.log(response)
             if (response) {
                 console.log("me guardé")
             };
-            // actions.editPetition(id);
-            // window.location.reload();
+            Swal.fire({
+
+                position: "top-end",
+                icon: "success",
+                title: "Petición guardada!",
+                showConfirmButton: false,
+                timer: 1500,
+                isConfirmed: window.location.reload()
+
+            });
         } else {
             console.log("campos obligatorios");
         }
@@ -228,7 +235,7 @@ export const EditControlP = () => {
                                 </ul>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                 <button type="button" className="btn btn-primary" onClick={handleSubmit}>Editar Control de Cambio</button>
                             </div>
                         </div>

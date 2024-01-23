@@ -4,18 +4,34 @@ import useAuthContext from "../context/authContext";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
 import { getDate } from "../helpers/date";
+import Swal from "sweetalert2";
 
 
 export const Home = () => {
     const { store, actions } = useContext(Context);
     let navigate = useNavigate();
     
-
+    
     const handleDelete = (petition_id) => {
 
-        
-        actions.deletePetition(petition_id)
-        console.log("petitions", typeof petition_id)
+        Swal.fire({
+            title: "Estas seguro que deseas eliminar la petición?",
+            text: "Luego de borrar, no podras arrepentirte!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, eliminalo !"
+          }).then((result) => {
+            if (result.isConfirmed) {
+                actions.deletePetition(petition_id),
+              Swal.fire({
+                title: "Eliminado!",
+                text: "Tu petición ha sido eliminada.",
+                icon: "success"
+              });
+            }
+          });
              
     }
     console.log("este es ",useAuthContext())
@@ -38,8 +54,9 @@ export const Home = () => {
     console.log("esta es la info:",petitionInfo)
     
     return (
-        <>
-            <h1> SOLICITUDES DE CAMBIO </h1>
+        <>  
+            <div className="container c "><h1> SOLICITUDES DE CAMBIO </h1></div>
+            
 
             <table className="table table-striped border-start-button">
                 <thead className="border-end">

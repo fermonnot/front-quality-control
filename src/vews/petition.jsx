@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { Context } from '../store/appContext';
 import { Navigate, useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 
 
@@ -11,10 +12,10 @@ import "../styles/petition.css"
 
 export const Petition = () => {
     const { store, actions } = useContext(Context);
-    
+
     const getUser = JSON.stringify(store.userData.user_id)
-    console.log("ESTE ES GETUSER",typeof getUser)
-    
+    console.log("ESTE ES GETUSER", typeof getUser)
+
     let initState = {
         code: '',
         document_title: '',
@@ -23,10 +24,10 @@ export const Petition = () => {
         type_document: '',
         change_type: '',
         user_id: getUser
-        
+
     };
 
-    
+
 
     const [userPetition, setUserPetition] = useState(initState);
     let navigate = useNavigate();
@@ -38,10 +39,10 @@ export const Petition = () => {
         });
 
     };
-    
+
     const handleSubmit = async (event) => {
         event.preventDefault();
-        
+
         if (userPetition.code.trim() != "" && userPetition.document_title.trim() != "" && userPetition.change_description.trim() != "" && userPetition.change_justify.trim() != "" && userPetition.change_type.trim() != "" && userPetition.type_document.trim() != "" && userPetition.user_id.trim() != "") {
 
             let response = await actions.addPetition(userPetition);
@@ -49,12 +50,30 @@ export const Petition = () => {
             if (response) {
                 console.log("me guardé")
             };
-            window.location.reload();
-            
+            Swal.fire({
+
+                position: "top-end",
+                icon: "success",
+                title: "Petición guardada!",
+                showConfirmButton: false,
+                timer: 1500,
+                isConfirmed: window.location.reload()
+
+            });
+            // window.location.reload()
+
+
+
         } else {
             console.log("campos obligatorios");
         }
     };
+
+
+
+
+
+
 
     return (
         <>
@@ -133,7 +152,7 @@ export const Petition = () => {
                         </button>
                     </div>
                 </form>
-           
+
                 <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog modal-dialog-scrollable">
                         <div className="modal-content">
@@ -153,11 +172,11 @@ export const Petition = () => {
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" className="btn btn-primary" onClick={handleSubmit}>Save changes</button>
+                                <button type="button" className="btn btn-primary" isConfirmed onClick={handleSubmit}>Save changes</button>
                             </div>
                         </div>
                     </div>
-                </div>    
+                </div>
             </div>
         </>
     );

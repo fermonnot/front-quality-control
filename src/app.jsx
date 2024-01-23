@@ -14,6 +14,8 @@ import { ControlsP } from './vews/controslP';
 import { NewControlP } from './vews/newControlP';
 import { EditControlP } from './vews/editControlP';
 import QualityRoutes from './vews/QualityRoutes';
+import UserRoutes from './vews/UserRoutes';
+import { Footer } from './component/footer.jsx';
 
 function App() {
 
@@ -24,7 +26,7 @@ function App() {
                 <div className='margin-app'>
                     <Routes>
 
-                        <Route path="/" element={<Layout />}>
+                        <Route path="/" element={<Layout/>}>
 
 
                             <Route element ={<PublicRoutes/>}>
@@ -33,23 +35,25 @@ function App() {
 
 
                             <Route element={<PrivateRoute />}>
-                                <Route element={<QualityRoutes/>}>
-                                    <Route path="/home" element={<Home />}/>;
-                                    <Route path="/add-controlp/:id" element={<NewControlP />} />;
-                                    <Route path="/update-controlp/:id" element={<EditControlP />} />;
-
-                                    <Route path="/controlsp" element={<ControlsP />} />;
-                                    <Route path="/petitions" element={<Petition />} />
-                                    <Route path="/prueba/" element={<Prueba />} />
+                                <Route element={<QualityRoutes allowedRoles={['calidad','admin']}/>}>
+                                    <Route path="/add-controlp/:id" element={<NewControlP />}/>;
+                                    <Route path="/update-controlp/:id" element={<EditControlP />}/>;
+                                    <Route path="/controlsp" element={<ControlsP/>} />;
+                                    
+                                    <Route path="/prueba/" element={<Prueba />} />;
                                 </Route>
-                            </Route>
+                                <Route element={<QualityRoutes allowedRoles={['usuario','calidad','admin']}/>}> 
+                                    <Route path="/home" element={<Home />}/>;
+                                    <Route path="/petitions" element={<Petition />}/>;
+                                </Route>
+                            </Route>;
 
+                            <Route path="*" element={<h1>There's nothing here: 404!</h1>} />;
 
-
-                            <Route path="*" element={<h1>There's nothing here: 404!</h1>} />
-                        </Route>;
+                        </Route>
                     </Routes>
                 </div>
+                <Footer/>
             </BrowserRouter>
         </UserContextProvider>
     )

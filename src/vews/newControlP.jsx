@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Context } from '../store/appContext';
 import { useNavigate, useParams } from "react-router-dom";
 import { getDate } from '../helpers/date';
-
+import Swal from 'sweetalert2';
 
 import "../styles/petition.css"
 
@@ -57,7 +57,16 @@ export const NewControlP = () => {
                 console.log("me guardé")
             };
             actions.editPetition(id);
-            window.location.reload();
+            Swal.fire({
+
+                position: "top-end",
+                icon: "success",
+                title: "Petición guardada!",
+                showConfirmButton: false,
+                timer: 1500,
+                isConfirmed: window.location.reload()
+
+            });
         } else {
             console.log("campos obligatorios");
         }
@@ -227,8 +236,8 @@ export const NewControlP = () => {
                                 </ul>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" className="btn btn-primary" onClick={handleSubmit}>Save changes</button>
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" className="btn btn-primary" onClick={handleSubmit}>Guardar Cambios</button>
                             </div>
                         </div>
                     </div>

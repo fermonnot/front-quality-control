@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import useAuthContext from "../context/authContext";
 import { getDate } from "../helpers/date";
 import { useNavigate } from "react-router";
+import Swal from 'sweetalert2'
 
 
 export const ControlsP = () => {
@@ -34,6 +35,9 @@ export const ControlsP = () => {
     // const getUpdateDate = getDate(store.ControlsP.update_at)
     // console.log("este es el getUpadeData", getUpdateDate)
     console.log("este es el id de la petición rata",handlePetition())
+
+  
+
     return ( 
         <>
             <h1> HISTORICO DE CAMBIOS </h1>

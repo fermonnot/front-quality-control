@@ -2,18 +2,19 @@ import React,{ useState, useContext } from 'react';
 import { Context } from '../store/appContext';
 import {Navigate, useLocation, useNavigate} from "react-router-dom";
 import useAuthContext from '../context/authContext';
+import slogan from '../images/slogan.png'
 
 
-const Login = () => {
+function Login() {
 	let initState = {
-		user_name:'',
+		user_name: '',
 		password: '',
 	};
-	const {actions, store} = useContext(Context);
-	const [userLogin,setUserLogin]= useState(initState);
-	
-	
-	
+	const { actions, store } = useContext(Context);
+	const [userLogin, setUserLogin] = useState(initState);
+
+
+
 	const navigate = useNavigate();
 
 	function handleChange({ target }) {
@@ -26,51 +27,52 @@ const Login = () => {
 
 
 
-    
+
 
 	const handleSubmit = async (event) => {
-		
+
 		event.preventDefault();
 		if (userLogin.user_name.trim() != "" && userLogin.password.trim() != "") {
 
-		   let response = await actions.Login(userLogin);
-		   if (response){
-				
-				navigate("/home")};
-				actions.getPetitions();
-				window.location.reload();
+			let response = await actions.Login(userLogin);
+			if (response) {
+
+				navigate("/home");
+			};
+			actions.getPetitions();
+			window.location.reload();
 
 		} else {
-		 console.log("campos obligatorios")
-		 ;
+			console.log("campos obligatorios");
 		}
 	};
 
 
 
-  return (
-    <div className="container">
+	return (
+		<div className="container">
+			<div>
+				<img className="img w-100" src= {slogan}/>
+			</div>
 			<div className="row justify-content-center">
 				<div className="col-12 col-md-6">
 					<form onSubmit={handleSubmit}>
 						<div className="form- group">
 							<label>Usuario</label>
 							<input type="text"
-							 name="user_name"
-							 className="form-control"
-							 onChange={handleChange}
-							 value={userLogin.usuario}
-							/>
+								name="user_name"
+								className="form-control"
+								onChange={handleChange}
+								value={userLogin.usuario} />
 						</div>
 
 						<div className="form- group">
 							<label>Contraseña</label>
 							<input type="password"
-							name="password"
-							className="form-control"
-							onChange={handleChange}
-							value={userLogin.password}
-							/>
+								name="password"
+								className="form-control"
+								onChange={handleChange}
+								value={userLogin.password} />
 						</div>
 
 
@@ -82,7 +84,7 @@ const Login = () => {
 				</div>
 			</div>
 		</div>
-  )
+	);
 }
 
 export default Login

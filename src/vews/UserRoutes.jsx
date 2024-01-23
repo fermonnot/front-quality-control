@@ -5,25 +5,29 @@ import useAuthContext from '../context/authContext';
 
 
 
-const QualityRoutes = ({allowedRoles} ) => {
+const UserRoutes = () => {
 
     const location = useLocation();
     const auth = useAuthContext();
     const navigate = useNavigate()
     // const from = location.state?.from || '/default';
-    console.log("este es el auth:", auth[0].userData.role)
-    if (!allowedRoles.includes(auth[0].userData.role)) {
+    console.log("este es el auth:", auth[0].userData)
+    if (auth[0].userData == null) {
         return (
             console.log("esta vacio"),
             <Navigate to="/login" />
         )
 
     } else
-        return (
-            <Outlet /> 
-        );
-    
+        if (auth[0].userData.role === "usuario") {
+            return (
+                 <Outlet /> 
+            );
+        } else return (
+            console.log("NO TIENES EL RANGO PAPA"),
+            <Navigate to="/petitions" />
+        )
     
     
 };
-export default QualityRoutes;
+export default UserRoutes;

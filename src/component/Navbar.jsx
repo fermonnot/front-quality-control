@@ -1,18 +1,19 @@
-import "../styles/navbar.css"
+import "../styles/navbar.css";
+
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { Navigate, useNavigate } from "react-router-dom";
-
+import logo from "../images/logo.png"
 
 
 export function Navbar() {
     const { store, actions } = useContext(Context);
     let navigate = useNavigate();
-    const [userData, setUserData] = useState(null);
-
-    const handleLogin = () => setUserData({ userData: store.userData }, );
-    const handleLogout = () => setUserData(null);
+    ;
+    console.log("este es el sTORE.USERDATA",store.userData)
+    const handleLogin = () => {actions.Login};
+    const handleLogout = () => {actions.logout};
 
 
     return (
@@ -20,20 +21,31 @@ export function Navbar() {
         <nav className="navbar navbar-expand-lg bg-body-tertiary" id="navbar">
 
             <div className="container-fluid">
+                <button className="icon" type="button">
+                    <span><img className="img w-50"src={logo}/></span>
+                </button>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavDropdown">
                     <ul className="navbar-nav">
                         <li className="nav-item">
-                            <Link to="/home" className="nav-link active" aria-current="page" href="#">Home</Link>
+                            {store.userData ?(
+                                <Link to="/home" className="nav-link active" aria-current="page" href="#">Home</Link>
+                                ) : (
+                                    null
+                                )}
                         </li>
 
                         <li>
-                            <Link to="/login" className="nav-link active" aria-current="page" href="#">Iniciar sesion</Link>
+                            {store.userData ?(
+                               null
+                            ) : (
+                                <Link to="/login" className="nav-link active" aria-current="page" href="#">Iniciar sesion</Link>
+                             )}
                         </li>
                         <li>
-                            {userData ? (
+                            {store.userData ? (
                                 <Link to="/petitions" className="nav-link active" aria-current="page" href="#"> Nueva peticion</Link>
                             ) : (
                                null
@@ -42,7 +54,7 @@ export function Navbar() {
                            
                         </li>
                         <li>
-                            {userData ? (
+                        {store.userData != null &&  store.userData.role != "usuario" ? (
                                 <Link to="/controlsp" className="nav-link active" aria-current="page" href="#"> Histiorico de Cambios</Link>
                             ) : (
                                null
@@ -51,7 +63,7 @@ export function Navbar() {
                            
                         </li>
                         <li>
-                            {userData ? (
+                            {store.userData != null &&  store.userData.role != "usuario" ?(
                                 <Link to="/add-controlp" className="nav-link active" aria-current="page" href="#"> Gestionar las Peticiones</Link>
                             ) : (
                                null
@@ -59,20 +71,10 @@ export function Navbar() {
 
                            
                         </li>
-                        <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Dropdown link
-                            </a>
-                            <ul className="dropdown-menu">
-                                <li><a className="dropdown-item" href="#">Action</a></li>
-                                <li><a className="dropdown-item" href="#">Another action</a></li>
-                                <li><a className="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </li>
                     </ul>
                 </div>
                 <div>
-                    {userData ? (
+                    {store.userData ? (
                         <button type="button" className="btn-close" aria-label="Close"
                             onClick={() => {
                                 handleLogout(),

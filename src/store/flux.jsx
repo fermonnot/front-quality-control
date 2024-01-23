@@ -16,7 +16,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			petitions_active: [],
 			petition: [],	
 			controlsp: [],
-			controlp: []
+			controlp: [],
+			cnpetition:[]
 
 		},
 
@@ -305,9 +306,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 
-			editControlP: async (cnpetition, controlp_id) => {
+			editControlP: async (controlp_id, cnpetition) => {
 				let store = getStore()
-
+				
 				try {
 					let response = await fetch(`${store.urlBase}/controlsp/${controlp_id}`, {
 						method: "PATCH",
@@ -317,6 +318,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						},
 
 						body: JSON.stringify(cnpetition)
+						
 					})
 					console.log(response)
 					if (response.ok) {
