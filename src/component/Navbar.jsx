@@ -18,11 +18,11 @@ export function Navbar() {
 
     return (
         
-        <nav className="navbar navbar-expand-lg bg-body-tertiary" id="navbar">
+        <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-custom" id="navbar">
 
-            <div className="container-fluid">
-                <button className="icon" type="button">
-                    <span><img className="img w-50"src={logo}/></span>
+            <div className="container-fluid navbar-custom">
+                <button className="icon " type="button">
+                    <span><img className="img w-25 "src={logo}/></span>
                 </button>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
@@ -31,7 +31,7 @@ export function Navbar() {
                     <ul className="navbar-nav">
                         <li className="nav-item">
                             {store.userData ?(
-                                <Link to="/home" className="nav-link active" aria-current="page" href="#">Home</Link>
+                                <Link to="/home" className="nav-link active" aria-current="page" href="#">Gestionar las Peticiones</Link>
                                 ) : (
                                     null
                                 )}
@@ -56,15 +56,6 @@ export function Navbar() {
                         <li>
                         {store.userData != null &&  store.userData.role != "usuario" ? (
                                 <Link to="/controlsp" className="nav-link active" aria-current="page" href="#"> Histiorico de Cambios</Link>
-                            ) : (
-                               null
-                            )}
-
-                           
-                        </li>
-                        <li>
-                            {store.userData != null &&  store.userData.role != "usuario" ?(
-                                <Link to="/add-controlp" className="nav-link active" aria-current="page" href="#"> Gestionar las Peticiones</Link>
                             ) : (
                                null
                             )}

@@ -2,7 +2,8 @@ import React,{ useState, useContext } from 'react';
 import { Context } from '../store/appContext';
 import {Navigate, useLocation, useNavigate} from "react-router-dom";
 import useAuthContext from '../context/authContext';
-import slogan from '../images/slogan.png'
+import slogan from '../images/slogan.png';
+import Swal from 'sweetalert2';
 
 
 function Login() {
@@ -43,7 +44,11 @@ function Login() {
 			window.location.reload();
 
 		} else {
-			console.log("campos obligatorios");
+			Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Verifica usuario o clave",
+            });
 		}
 	};
 
@@ -51,8 +56,8 @@ function Login() {
 
 	return (
 		<div className="container">
-			<div>
-				<img className="img w-100" src= {slogan}/>
+			<div className= "d-flex justify-content-center">
+				<img className="img m-5 " src= {slogan}/>
 			</div>
 			<div className="row justify-content-center">
 				<div className="col-12 col-md-6">

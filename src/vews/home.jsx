@@ -55,7 +55,7 @@ export const Home = () => {
     
     return (
         <>  
-            <div className="container c "><h1> SOLICITUDES DE CAMBIO </h1></div>
+            <div className="d-flex tittles-custom"><h1> SOLICITUDES DE CAMBIO </h1></div>
             
 
             <table className="table table-striped border-start-button">

@@ -65,7 +65,11 @@ export const Petition = () => {
 
 
         } else {
-            console.log("campos obligatorios");
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Te falta algun dato del formulario",
+            });
         }
     };
 

@@ -3,8 +3,7 @@ import { Context } from "../store/appContext";
 import useAuthContext from "../context/authContext";
 import { getDate } from "../helpers/date";
 import { useNavigate } from "react-router";
-import Swal from 'sweetalert2'
-
+import "../styles/Controlsp.css"
 
 export const ControlsP = () => {
     const { store, actions } = useContext(Context);
@@ -39,8 +38,10 @@ export const ControlsP = () => {
   
 
     return ( 
-        <>
-            <h1> HISTORICO DE CAMBIOS </h1>
+        <>  
+            <div className="d-flex tittles-custom"> 
+                <h1> HISTORICO DE CAMBIOS </h1>
+            </div>
             <div>
                 <table className="table table-striped border-start-button">
                     <thead className="border-end">
@@ -57,7 +58,7 @@ export const ControlsP = () => {
                             <th scope="col">Observación</th>
                             <th scope="col">Ultima Actualización</th>
                             <th scope="col">Datos del cambio</th>
-                            <th scope="col">ID DEL CAMBIO</th>
+                            <th scope="col">Acción</th>
 
 
 

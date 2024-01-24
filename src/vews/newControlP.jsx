@@ -68,7 +68,11 @@ export const NewControlP = () => {
 
             });
         } else {
-            console.log("campos obligatorios");
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Te falta algun dato por llenar",
+            });
         }
     };
     
@@ -142,29 +146,34 @@ export const NewControlP = () => {
                         <label for="floatingTextarea">Nombre del cliente que solicita el cambio</label>
                     </div>
                     <div className="form-floating mb-3">
-                        <textarea className="form-control"
+                        <input className="form-control"
                             onChange={handleChange}
                             name='date_petition_sent'
                             value={qualityPetition.date_petition_sent}
-                            placeholder="Decribe el cambio que deseas"
+                            type='date'
                             id="floatingTextarea">
-                        </textarea>
+                        </input>
                         <label for="floatingTextarea">Fecha de envío del Documento</label>
                     </div>
                     <div className="form-floating mb-3">
-                        <textarea className="form-control"
+                        <input className="form-control"
+                            type='date'
                             onChange={handleChange}
                             name='date_petition_received'
                             value={qualityPetition.date_petition_received}
-                            placeholder="Decribe el motivo por el que deseas cambiar este documento" id="floatingTextarea"></textarea>
+                            placeholder="Decribe el motivo por el que deseas cambiar este documento" id="floatingTextarea"
+                        >
+                        </input>
                         <label for="floatingTextarea">Fecha de recepción del Documento</label>
                     </div>
                     <div className="form-floating mb-3">
-                        <textarea className="form-control"
+                        <input className="form-control"
+                            type='date'
                             onChange={handleChange}
                             name='date_finished_petition'
                             value={qualityPetition.date_finished_petition}
-                            placeholder="Decribe el motivo por el que deseas cambiar este documento" id="floatingTextarea"></textarea>
+                            placeholder="Decribe el motivo por el que deseas cambiar este documento" id="floatingTextarea"
+                        ></input>
                         <label for="floatingTextarea">Fecha de finalización del cambio:</label>
                     </div>
                     <div className="form-floating mb-3">
