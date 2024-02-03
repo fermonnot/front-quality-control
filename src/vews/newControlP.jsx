@@ -13,7 +13,7 @@ export const NewControlP = () => {
     const { store, actions } = useContext(Context);
     let { id } = useParams();
     console.log("este es petitionId:", id)
-    const getPetitionId = store.petition.id
+    const getPetitionId = store.petition.created
     console.log("fecha inicial", getPetitionId)
     
     // console.log("este es el id de la peticion:", getDatePet)
@@ -41,7 +41,7 @@ export const NewControlP = () => {
     const handleChange = ({ target }) => {
         setQualityPetition({
             ...qualityPetition,
-            [target.name]: target.value,
+            [target.name]: target.defaultValue,
         });
 
     };
@@ -96,7 +96,7 @@ export const NewControlP = () => {
                 <tbody>
                     <tr >
                         <th scope="row">{store.petition.id}</th>
-                        <td>{getDate(getPetitionId)}</td>
+                        <td>{getDate(store.petition.created)}</td>
                         <td>{store.petition.code}</td>
                         <td>{store.petition.document_title}</td>
                         <td>{store.petition.change_description}</td>
@@ -130,7 +130,7 @@ export const NewControlP = () => {
                         <input type="text" className="form-control"
                             onChange={handleChange}
                             name='process_affected'
-                            value={qualityPetition.process_affected}
+                            defaultValue={qualityPetition.process_affected || store.controlp.process_affected}
                             id="floatingInput"
                             placeholder="Procesos Afectados" />
                         <label for="floatingInput"> Procesos Afectados </label>
@@ -139,7 +139,7 @@ export const NewControlP = () => {
                         <textarea className="form-control"
                             onChange={handleChange}
                             name='name_customer'
-                            value={qualityPetition.name_customer}
+                            defaultValue={qualityPetition.name_customer || store.controlp.name_customer}
                             placeholder="Decribe el cambio que deseas"
                             id="floatingTextarea">
                         </textarea>
@@ -149,7 +149,7 @@ export const NewControlP = () => {
                         <input className="form-control"
                             onChange={handleChange}
                             name='date_petition_sent'
-                            value={qualityPetition.date_petition_sent}
+                            defaultValue={qualityPetition.date_petition_sent || store.controlp.date_petition_sent}
                             type='date'
                             id="floatingTextarea">
                         </input>
@@ -160,7 +160,7 @@ export const NewControlP = () => {
                             type='date'
                             onChange={handleChange}
                             name='date_petition_received'
-                            value={qualityPetition.date_petition_received}
+                            defaultValue={qualityPetition.date_petition_received || store.controlp.date_petition_received}
                             placeholder="Decribe el motivo por el que deseas cambiar este documento" id="floatingTextarea"
                         >
                         </input>
@@ -171,7 +171,7 @@ export const NewControlP = () => {
                             type='date'
                             onChange={handleChange}
                             name='date_finished_petition'
-                            value={qualityPetition.date_finished_petition}
+                            defaultValue={qualityPetition.date_finished_petition || store.controlp.date_finished_petition}
                             placeholder="Decribe el motivo por el que deseas cambiar este documento" id="floatingTextarea"
                         ></input>
                         <label for="floatingTextarea">Fecha de finalización del cambio:</label>
@@ -180,15 +180,15 @@ export const NewControlP = () => {
                         <select className="form-select"
                             onChange={handleChange}
                             name='process_customer'
-                            value={qualityPetition.process_customer}
+                            defaultValue={qualityPetition.process_customer || store.controlp.process_customer}
                             id="floatingSelect"
                             aria-label="Floating label select example">
                             <option selected> Selecciona el proceso correspondiente </option>
-                            <option value='Compras'>Compras</option>
-                            <option value='Operaciones'>Operaciones</option>
-                            <option value='Calidad'>Calidad</option>
-                            <option value='Dirección'>Dirección</option>
-                            <option value='Transporte'>Transporte</option>
+                            <option defaultValue='Compras'>Compras</option>
+                            <option defaultValue='Operaciones'>Operaciones</option>
+                            <option defaultValue='Calidad'>Calidad</option>
+                            <option defaultValue='Dirección'>Dirección</option>
+                            <option defaultValue='Transporte'>Transporte</option>
                         </select>
                         <label for="floatingSelect"> Proceso solicitante</label>
                     </div>
@@ -196,13 +196,13 @@ export const NewControlP = () => {
                         <select className="form-select"
                             onChange={handleChange}
                             name='status'
-                            value={qualityPetition.status}
+                            defaultValue={qualityPetition.status || store.controlp.status}
                             id="floatingSelect"
                             aria-label="Floating label select example">
                             <option selected> Selecciona el estado del trámite</option>
-                            <option value='divulgado'>Divulgado</option>
-                            <option value='distribuido'>Distribuido</option>
-                            <option value='completado'>Completado</option>
+                            <option defaultValue='divulgado'>Divulgado</option>
+                            <option defaultValue='distribuido'>Distribuido</option>
+                            <option defaultValue='completado'>Completado</option>
                         </select>
                         <label for="floatingSelect"> Estado del trámite</label>
                     </div>
@@ -210,14 +210,14 @@ export const NewControlP = () => {
                         <textarea className="form-control"
                             onChange={handleChange}
                             name='observation'
-                            value={qualityPetition.observation}
+                            defaultValue={qualityPetition.observation || store.controlp.observation}
                             placeholder="indica si existe alguna observación"
                             id="floatingTextarea">
                         </textarea>
                         <label for="floatingTextarea">Observación</label>
                     </div>
                     <div className="d-grid gap-2 col-6 mx-auto">
-                        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <button type="button" className="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             Generar Solicitud
                         </button>
                     </div>

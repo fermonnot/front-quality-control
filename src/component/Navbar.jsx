@@ -1,6 +1,6 @@
 import "../styles/navbar.css";
 
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -18,7 +18,7 @@ export function Navbar() {
 
     return (
         
-        <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-custom" id="navbar">
+        <nav className="navbar navbar-expand-lg bg-body-tertiary navbar-custom shadow-sm bg-body-tertiary rounded" id="navbar">
 
             <div className="container-fluid navbar-custom">
                 <button className="icon " type="button">

@@ -56,7 +56,7 @@ export const Petition = () => {
                 icon: "success",
                 title: "Petición guardada!",
                 showConfirmButton: false,
-                timer: 1500,
+                timer: 5000,
                 isConfirmed: window.location.reload()
 
             });
@@ -175,8 +175,8 @@ export const Petition = () => {
                                 </ul>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" className="btn btn-primary" isConfirmed onClick={handleSubmit}>Save changes</button>
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" className="btn btn-primary" isConfirmed onClick={handleSubmit}>Guardar</button>
                             </div>
                         </div>
                     </div>

@@ -16,44 +16,46 @@ import { EditControlP } from './vews/editControlP';
 import QualityRoutes from './vews/QualityRoutes';
 import UserRoutes from './vews/UserRoutes';
 import { Footer } from './component/footer.jsx';
+import { Sidebar } from './component/sidebar.jsx';
 
 function App() {
 
     return (
         <UserContextProvider>
             <BrowserRouter>
-                <Navbar />
-                <div className='margin-app'>
-                    <Routes>
+                {/* <Navbar />
 
-                        <Route path="/" element={<Layout/>}>
+                <Sidebar /> */}
+
+                <Routes>
+
+                    <Route path="/" element={<Layout />}>
 
 
-                            <Route element ={<PublicRoutes/>}>
+                        <Route element={<PublicRoutes />}>
                             <Route path='login' element={<Login />} />
-                            </Route>
-
-
-                            <Route element={<PrivateRoute />}>
-                                <Route element={<QualityRoutes allowedRoles={['calidad','admin']}/>}>
-                                    <Route path="/add-controlp/:id" element={<NewControlP />}/>;
-                                    <Route path="/update-controlp/:id" element={<EditControlP />}/>;
-                                    <Route path="/controlsp" element={<ControlsP/>} />;
-                                    
-                                    <Route path="/prueba/" element={<Prueba />} />;
-                                </Route>
-                                <Route element={<QualityRoutes allowedRoles={['usuario','calidad','admin']}/>}> 
-                                    <Route path="/home" element={<Home />}/>;
-                                    <Route path="/petitions" element={<Petition />}/>;
-                                </Route>
-                            </Route>;
-
-                            <Route path="*" element={<h1>There's nothing here: 404!</h1>} />;
-
                         </Route>
-                    </Routes>
-                </div>
-                <Footer/>
+
+
+                        <Route element={<PrivateRoute />}>
+                            <Route element={<QualityRoutes allowedRoles={['calidad', 'admin']} />}>
+                                <Route path="/add-controlp/:id" element={<NewControlP />} />;
+                                <Route path="/update-controlp/:id" element={<EditControlP />} />;
+                                <Route path="/controlsp" element={<ControlsP />} />;
+
+                                <Route path="/prueba/" element={<Prueba />} />;
+                            </Route>
+                            <Route element={<QualityRoutes allowedRoles={['usuario', 'calidad', 'admin']} />}>
+                                <Route path="/home" element={<Home />} />;
+                                <Route path="/petitions" element={<Petition />} />;
+                            </Route>
+                        </Route>;
+
+                        <Route path="*" element={<h1>There's nothing here: 404!</h1>} />;
+
+                    </Route>
+                </Routes>
+
             </BrowserRouter>
         </UserContextProvider>
     )

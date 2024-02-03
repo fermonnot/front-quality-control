@@ -10,53 +10,73 @@ import Swal from "sweetalert2";
 export const Home = () => {
     const { store, actions } = useContext(Context);
     let navigate = useNavigate();
-    
-    
+
+
     const handleDelete = (petition_id) => {
 
-        Swal.fire({
-            title: "Estas seguro que deseas eliminar la petición?",
-            text: "Luego de borrar, no podras arrepentirte!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Si, eliminalo !"
-          }).then((result) => {
-            if (result.isConfirmed) {
-                actions.deletePetition(petition_id),
-              Swal.fire({
-                title: "Eliminado!",
-                text: "Tu petición ha sido eliminada.",
-                icon: "success"
-              });
-            }
-          });
-             
+        if (store.userData.role != "usuario") {
+
+            Swal.fire({
+                title: "Estas seguro que deseas eliminar la petición?",
+                text: "Luego de borrar, no podras arrepentirte!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, eliminalo !"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    actions.deletePetition(petition_id),
+                        Swal.fire({
+                            title: "Eliminado!",
+                            text: "Tu petición ha sido eliminada.",
+                            icon: "success"
+                        });
+                }
+            });
+        } else {
+            Swal.fire({
+
+                icon: "error",
+                title: "Oops...",
+                text: "No tienes los permisos para realizar esta acción",
+
+
+            });
+        }
     }
-    console.log("este es ",useAuthContext())
-    
+
+
+    console.log("este es ", useAuthContext())
+
     // let dateFromDB = new Date(store.petition.created); // Ejemplo de fecha obtenida de la base de datos
     // let options = { timeZone: 'America/Caracas', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
     // let formattedDate = new Intl.DateTimeFormat('es-VE', options).format(dateFromDB);
     // console.log(formattedDate);
-    
+
     const handlePetition = (petition_id) => {
-        
-      
-        actions.consultPetition(petition_id)
-        navigate(`/add-controlp/${petition_id}`)
-        
-    
+
+        if (store.userData.role != "usuario") {
+
+            actions.consultPetition(petition_id)
+            navigate(`/add-controlp/${petition_id}`)
+
+        } else{
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "No tienes los permisos para realizar esta acción",
+            });
+        }
     }
-    
+
     const petitionInfo = store.petition
-    console.log("esta es la info:",petitionInfo)
-    
+    console.log("esta es la info:", petitionInfo)
+
     return (
-        <>  
+        <>
             <div className="d-flex tittles-custom"><h1> SOLICITUDES DE CAMBIO </h1></div>
-            
+
 
             <table className="table table-striped border-start-button">
                 <thead className="border-end">
@@ -85,17 +105,17 @@ export const Home = () => {
                                 <td>{petitions.change_justify}</td>
                                 <td>{petitions.type_document}</td>
                                 <td>{petitions.change_type}</td>
-                                <td>                                  
-                                <button type="buttom"
-                                    className="btn btn-primary"
-                                    onClick={()=>handleDelete(petitions.id)}
+                                <td>
+                                    <button type="buttom"
+                                        className="btn btn-primary"
+                                        onClick={() => handleDelete(petitions.id)}
                                     >Eliminar
-                                </button>
-                                <button type="buttom"
-                                    className="btn btn-primary m-1"
-                                    onClick={()=> handlePetition(petitions.id)}
+                                    </button>
+                                    <button type="buttom"
+                                        className="btn btn-primary m-1"
+                                        onClick={() => handlePetition(petitions.id)}
                                     >Gestionar
-                                </button>
+                                    </button>
                                 </td>
                             </tr>
                         )

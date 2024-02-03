@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Context } from '../store/appContext';
 import { useNavigate, useParams } from "react-router-dom";
 import { getDate } from '../helpers/date';
@@ -15,11 +15,12 @@ export const EditControlP = () => {
     console.log("este es petitionId:", id)
     const getControlPetitionId = store.controlp.id
     console.log("fecha inicial", getControlPetitionId)
-    
-    // console.log("este es el id de la peticion:", getDatePet)
+
 
 
     let initState = {
+
+
         process_affected: '',
         name_customer: '',
         process_customer: '',
@@ -32,9 +33,9 @@ export const EditControlP = () => {
     };
 
 
-
-    const [qualityPetition, setQualityPetition] = useState(initState);
+    const [qualityPetition, setQualityPetition] = useState(id, initState);
     let navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
 
     const handleChange = ({ target }) => {
         setQualityPetition({
@@ -48,8 +49,8 @@ export const EditControlP = () => {
         event.preventDefault();
 
         if (qualityPetition.process_affected.trim() != "" && qualityPetition.name_customer.trim() != "" && qualityPetition.process_customer.trim() != "" && qualityPetition.date_petition_sent.trim() != "" && qualityPetition.date_petition_received.trim() != "" && qualityPetition.status.trim() != "" && qualityPetition.date_finished_petition.trim() != "" && qualityPetition.observation.trim() != "") {
-           
-            let response = await actions.editControlP( id, qualityPetition);
+
+            let response = await actions.editControlP(id, qualityPetition);
             console.log(response)
             if (response) {
                 console.log("me guardé")
@@ -72,10 +73,20 @@ export const EditControlP = () => {
             });
         }
     };
-    
+    useEffect(() => {
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+    }, []);
+
+
+
 
     return (
         <>
+
+        
             <table className="table table-striped border-start-button">
                 <thead className="border-end">
                     <tr>
@@ -89,6 +100,8 @@ export const EditControlP = () => {
                         <th scope="col">Proceso solicitante</th>
                         <th scope="col">Estado del trámite</th>
                         <th scope="col">Observación</th>
+                        <th scope="col">Acción</th>
+
 
                     </tr>
                 </thead>
@@ -101,6 +114,7 @@ export const EditControlP = () => {
                         <td>{store.controlp.date_petition_sent}</td>
                         <td>{store.controlp.date_petition_received}</td>
                         <td>{store.controlp.date_finished_petition}</td>
+                        <td>{store.controlp.process_customer}</td>
                         <td>{store.controlp.status}</td>
                         <td>{store.controlp.observation}</td>
                         <td>
@@ -120,8 +134,8 @@ export const EditControlP = () => {
 
                 </tbody>
             </table>
-            <h1> Edicion de registro del Control de cambio</h1>
             <h4>En este formulario ingresa todos los datos requeridos para EDITAR el registro en el Historico de cambios</h4>
+            <h1> Edición de registro del Control de cambio</h1>
             <div id="div-margen">
                 <form onSubmit={handleSubmit}>
 

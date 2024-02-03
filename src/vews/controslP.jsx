@@ -114,8 +114,8 @@ export const ControlsP = () => {
                             </div>
                             <div className="modal-body">
                                 <ul>
-                                    <li>ID DEL CAMBIO del documento: {store.petition.id}</li>
-                                    <li>creación del CAMBIO del documento: {getDate(store.petition.created)}</li>
+                                    
+                                    <li>Fecha de petición del documento: {getDate(store.petition.created)}</li>
                                     <li>Codigo del documento: {store.petition.code}</li>
                                     <li>Titulo del documento: {store.petition.document_title}</li>
                                     <li>Descripción del cambio: {store.petition.change_description}</li>
@@ -125,7 +125,7 @@ export const ControlsP = () => {
                                 </ul>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
         
                             </div>
                         </div>
