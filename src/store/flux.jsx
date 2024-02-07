@@ -17,7 +17,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			petition: [],
 			controlsp: [],
 			controlp: [],
-			cnpetition: []
+			cnpetition: [],
+			users: []
 
 		},
 
@@ -336,6 +337,61 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 
+
+			getUsers: async () => {
+				let store = getStore()
+				try {
+					let response = await fetch(`${store.urlBase}/users`, {
+
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+							"Authorization": `Bearer ${store.userData.token}`
+						},
+
+					});
+					let data = await response.json();
+					console.log(data,"<--- esa es la data de user")
+					if (response.ok) {
+						setStore({
+							...store,
+							users: data
+						})
+
+					}
+				} catch (error) {
+
+					return console.log(error), 401
+
+				}
+			},
+
+
+			deleteUser: async (user_id) => {
+
+				let store = getStore()
+				try {
+					let response = await fetch(`${store.urlBase}/users/${user_id}`, {
+						method: "DELETE",
+						headers: {
+							'Content-Type': 'application/json',
+							"Authorization": `Bearer ${store.userData.token}`
+						},
+						body: JSON.stringify(user_id)
+					})
+					console.log(response)
+					if (response.ok) {
+
+						const data = await response.json();
+						console.log(data);
+						getActions().getUsers(), 300
+						console.log("me borré")
+					}
+
+				} catch (error) {
+					console.log(error)
+				}
+			}
 
 
 

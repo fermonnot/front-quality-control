@@ -28,8 +28,7 @@ export function Sidebar() {
     const handleLogin = () => { actions.Login };
     const handleLogout = () => { actions.logout }
 
-    console.log(store.userData, "dataaa")
-
+    
     return (
         <div className='sidebar-custom shadow bg-body-tertiary rounded'>
             <CDBSidebar textColor="#333" backgroundColor="#f0f0f0" style={{ maxHeight: "100vh" }} >

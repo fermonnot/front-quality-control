@@ -82,7 +82,7 @@ export const Petition = () => {
     return (
         <>
 
-            <div className='container text-center w-75'>
+            <div className='container text-center w-75 border rounded-2 mb-1 shadow p-3 mb-5 bg-body-tertiary rounded mt-2'>
                 <h1 >Nueva solicitud</h1>
                 <p>En este formulario ingresa todos los datos requeridos de la solicitud que deseas ingresar a el proceso de Gestión de la calidad</p>
                 <form id='formRef' >
