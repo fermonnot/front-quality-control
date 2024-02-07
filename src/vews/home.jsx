@@ -23,6 +23,7 @@ export const Home = () => {
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
+                cancelButtonText: "Cancelar",
                 confirmButtonText: "Si, eliminalo !"
             }).then((result) => {
                 if (result.isConfirmed) {

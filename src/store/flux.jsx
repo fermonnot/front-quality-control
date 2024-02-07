@@ -14,10 +14,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 			endPoint: "petitions-active",
 			petitions: [],
 			petitions_active: [],
-			petition: [],	
+			petition: [],
 			controlsp: [],
 			controlp: [],
-			cnpetition:[]
+			cnpetition: []
 
 		},
 
@@ -59,13 +59,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json',
+							"Authorization": `Bearer ${store.userData.token}`
 						},
 						body: JSON.stringify(user),
 					});
-					if (response.ok) {
-						return true;
+					console.log("esta es la respuesta del flux:", response)
+					if (response.status === 426) {
+						console.log("el nombre ya esta en uso ")
+						return false;
 					}
-					return false;
+					return true;
 				} catch (error) {
 					console.log(`Error: ${error}`);
 				}
@@ -141,7 +144,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			editPetition: async (petition_id) => {
 				let store = getStore()
-				let active_petition = {"is_active": false}
+				let active_petition = { "is_active": false }
 				try {
 					let response = await fetch(`${store.urlBase}/petitions-active/${petition_id}`, {
 						method: "PATCH",
@@ -154,7 +157,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					console.log(response)
 					if (response.ok) {
-						
+
 						console.log("me volvi inactiva")
 					}
 
@@ -178,7 +181,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					console.log(response)
 					if (response.ok) {
-						
+
 						const data = await response.json();
 						console.log(data);
 						getActions().getPetitions(), 300
@@ -200,17 +203,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 							'Content-Type': 'application/json',
 							"Authorization": `Bearer ${store.userData.token}`
 						},
-						
+
 					})
-						
+
 					if (response.ok) {
-						
+
 						const data = await response.json();
-						console.log("ESTA ES DATA",data);	
+						console.log("ESTA ES DATA", data);
 						setStore({
 							...store,
-							petition: data 	
-						})	
+							petition: data
+						})
 					}
 
 				} catch (error) {
@@ -232,7 +235,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 					});
 					let data = await response.json();
-					console.log('este es el CONTROL PETITIONS:',data)
+					console.log('este es el CONTROL PETITIONS:', data)
 					if (response.ok) {
 						setStore({
 							...store,
@@ -240,14 +243,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 						})
 
 					}
-					console.log("este es el store de CONTROLSP:",getDate( store.controlsp.update_at))
+					console.log("este es el store de CONTROLSP:", getDate(store.controlsp.update_at))
 				} catch (error) {
 
 					return console.log(error), 401
 
 				}
 			},
-			
+
 
 			consultControlP: async (controlp_id) => {
 
@@ -259,17 +262,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 							'Content-Type': 'application/json',
 							"Authorization": `Bearer ${store.userData.token}`
 						},
-						
+
 					})
-						
+
 					if (response.ok) {
-						
+
 						const data = await response.json();
-						console.log("ESTA ES DATA",data);	
+						console.log("ESTA ES DATA", data);
 						setStore({
 							...store,
-							controlp: data 	
-						})	
+							controlp: data
+						})
 					}
 
 				} catch (error) {
@@ -278,7 +281,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 
-			
+
 
 
 			addControlP: async (cpetition) => {
@@ -296,7 +299,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					console.log(response)
 					if (response.ok) {
-						
+
 						console.log("me guardé")
 					}
 
@@ -308,7 +311,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			editControlP: async (controlp_id, cnpetition) => {
 				let store = getStore()
-				
+
 				try {
 					let response = await fetch(`${store.urlBase}/controlsp/${controlp_id}`, {
 						method: "PATCH",
@@ -318,7 +321,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						},
 
 						body: JSON.stringify(cnpetition)
-						
+
 					})
 					console.log(response)
 					if (response.ok) {
@@ -333,10 +336,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			},
 
-			
 
 
-			
+
+
 		}
 
 	};

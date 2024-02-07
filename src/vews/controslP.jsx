@@ -47,11 +47,11 @@ export const ControlsP = () => {
                     <thead className="border-end">
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Fecha de creacion del historico del cambio</th>
+                            <th scope="col">Fecha de creación del historico del cambio</th>
                             <th scope="col">Procesos Afectados</th>
                             <th scope="col">Nombre del Solicitante</th>
                             <th scope="col">Proceso Solicitante </th>
-                            <th scope="col">Fecha de envio de archivo </th>
+                            <th scope="col">Fecha de envío de archivo </th>
                             <th scope="col">Fecha de recibo de archivo</th>
                             <th scope="col">Estado de solicitud</th>
                             <th scope="col">Fecha de cierre de solicitud</th>
@@ -117,7 +117,7 @@ export const ControlsP = () => {
                                     
                                     <li>Fecha de petición del documento: {getDate(store.petition.created)}</li>
                                     <li>Codigo del documento: {store.petition.code}</li>
-                                    <li>Titulo del documento: {store.petition.document_title}</li>
+                                    <li>Título del documento: {store.petition.document_title}</li>
                                     <li>Descripción del cambio: {store.petition.change_description}</li>
                                     <li>Justificación del cambio: {store.petition.change_justify}</li>
                                     <li>Tipo de documento: {store.petition.type_document}</li>

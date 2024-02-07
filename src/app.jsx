@@ -17,6 +17,7 @@ import QualityRoutes from './vews/QualityRoutes';
 import UserRoutes from './vews/UserRoutes';
 import { Footer } from './component/footer.jsx';
 import { Sidebar } from './component/sidebar.jsx';
+import Singup from './vews/SignUp.jsx';
 
 function App() {
 
@@ -44,6 +45,9 @@ function App() {
                                 <Route path="/controlsp" element={<ControlsP />} />;
 
                                 <Route path="/prueba/" element={<Prueba />} />;
+                            </Route>
+                            <Route element={<QualityRoutes allowedRoles={['admin']}/>}>
+                                <Route path='Add-user' element={<Singup/>}/>
                             </Route>
                             <Route element={<QualityRoutes allowedRoles={['usuario', 'calidad', 'admin']} />}>
                                 <Route path="/home" element={<Home />} />;

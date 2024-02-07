@@ -134,7 +134,7 @@ export const EditControlP = () => {
 
                 </tbody>
             </table>
-            <h4>En este formulario ingresa todos los datos requeridos para EDITAR el registro en el Historico de cambios</h4>
+            <h4>En este formulario ingresa todos los datos requeridos para EDITAR el registro en el Histórico de cambios</h4>
             <h1> Edición de registro del Control de cambio</h1>
             <div id="div-margen">
                 <form onSubmit={handleSubmit}>

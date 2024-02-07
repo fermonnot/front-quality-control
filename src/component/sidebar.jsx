@@ -11,7 +11,9 @@ import {
 import "../styles/sidebar.css"
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
-import logo from "../images/logo.png"
+import logo from "../images/logo.png";
+import masR from "../images/masR.png";
+import patricio from "../images/patricio.png"
 
 
 
@@ -34,7 +36,7 @@ export function Sidebar() {
                 <CDBSidebarHeader prefix={<i className="fa fa-bars" />}>
                     <div className="container" style={{ display: 'flex', alignItems: 'center' }}>
                         <img
-                            src={logo}
+                            src={patricio}
                             alt=""
                             style={{ width: '30px' }}
                         />
@@ -43,25 +45,36 @@ export function Sidebar() {
                 </CDBSidebarHeader>
                 <CDBSidebarContent>
                     <CDBSidebarMenu>
-                        <CDBSidebarMenuItem icon={store.userData.role != "usuario" ? "fa-light fa-clipboard-list" : null}>
+                        <CDBSidebarMenuItem icon={store.userData.role != "usuario" ? "fa-light fa-clipboard-list" : null} 
+                            onClick={() => {
+
+                            navigate("/controlsp")
+
+                        }}> <Link to="/home"></Link>
 
                             {store.userData.role != "usuario" ?
                                 (
-                                    <Link to="/controlsp" className="nav-link active" aria-current="page" href="#"> Histiorico de Cambios</Link>
+                                    <Link to="/controlsp"> Histiorico de Cambios</Link>
 
                                 ) : (
                                     null
                                 )}
                         </CDBSidebarMenuItem>
-                        <CDBSidebarMenuItem icon="far fa-list-ul">
+                        <CDBSidebarMenuItem icon="far fa-list-ul"
+                            onClick={() => {
 
+                                navigate("/home")
 
-                            <Link to="/home" className="nav-link active" aria-current="page" href="#">Solicitudes</Link>
-
+                            }}> <Link to="/home">Solicitudes</Link>
 
                         </CDBSidebarMenuItem>
-                        <CDBSidebarMenuItem icon="far fa-edit">
-                            <Link to="/petitions" className="nav-link active" aria-current="page" href="#">Nueva Solicitud</Link>
+                        <CDBSidebarMenuItem icon="far fa-edit"
+                            onClick={() => {
+
+                                navigate("/petitions")
+
+                            }}><Link to="/petitions">Nueva Solicitud</Link>
+
                         </CDBSidebarMenuItem>
 
                         {/* <CDBSidebarMenuItem icon="sticky-note">Components</CDBSidebarMenuItem>
@@ -70,13 +83,28 @@ export function Sidebar() {
                         {/* <CDBSidebarMenuItem icon="chart-line" iconType="solid">
                             metrics
                         </CDBSidebarMenuItem> */}
+                        
+                        <CDBSidebarMenuItem icon={store.userData.role == "admin" ? "fa-solid fa-user-plus" : null} 
+                            onClick={() => {
+
+                            navigate("/add-user")
+
+                        }}> <Link to="/home"></Link>
+
+                            {store.userData.role == "admin" ?
+                                (
+                                    <Link to="/add-user"> Crear Usuario </Link>
+
+                                ) : (
+                                    null
+                                )}
+                        </CDBSidebarMenuItem>
                         <CDBSidebarMenuItem icon="fas fa-sign-out-alt" iconType="solid"
                             onClick={() => {
                                 handleLogout(),
                                     navigate("/login"),
                                     actions.logout();
-                            }}> Salir 
-                            
+                            }}> <Link to="/login">Salir</Link>
                         </CDBSidebarMenuItem>
                     </CDBSidebarMenu>
                 </CDBSidebarContent>
@@ -85,9 +113,15 @@ export function Sidebar() {
 
                     <div
                         className="sidebar-btn-wrapper"
-                        style={{ padding: '20px 5px' }}
-                    > Mas que rapido, súper rápido!
-                     
+                        style={{ display: 'flex', alignItems: 'center', padding: '20px 5px' }}
+
+                    >
+                        <img
+                            src={masR}
+                            alt=""
+                            style={{ width: '90%' }}
+                        />
+
                     </div>
                 </CDBSidebarFooter>
             </CDBSidebar>
